@@ -25,12 +25,20 @@ from typing import NamedTuple
 
 from fairlearn.metrics import *
 
+# added libraries to display metric in results
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
 
 class Identity_Info(NamedTuple):
     no_of_classes: int = 2
     no_of_attr: int = 3
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+#device = torch.device('cpu')
+device = torch.device("mps")  # Uses Apple GPU
+
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -46,7 +54,7 @@ parser.add_argument('--batch-size', default=256, type=int,
 parser.add_argument('--epochs', default=10, type=int, metavar='N',
                     help='number of total epochs to run')
 
-parser.add_argument('--lr', '--learning-rate', default=0.05, type=float,
+parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
@@ -82,11 +90,11 @@ parser.add_argument('--attribute_type', default='race', type=str, help='race|gen
 
                     
 def set_random_seed(seed):
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed) # if use multi-GPU
-    torch.backends.cudnn.deterministic = False
-    torch.backends.cudnn.benchmark = True
+    #torch.manual_seed(seed)
+    #torch.cuda.manual_seed(seed)
+    #!torch.cuda.manual_seed_all(seed) # if use multi-GPU
+    #torch.backends.cudnn.deterministic = False
+    #torch.backends.cudnn.benchmark = True
     np.random.seed(seed)
     random.seed(seed)
 
@@ -117,7 +125,10 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
     for i, (input, target, attr) in enumerate(train_dataset_loader):
         optimizer.zero_grad()
 
-        with torch.cuda.amp.autocast():
+        #with torch.cuda.amp.autocast():
+        # NEW CODE (MPS-Compatible)
+        # float32 cause float16 does not support completely the operations and i would get some Nan predictions
+        with torch.autocast(device_type="mps", dtype=torch.float32):
             input = input.to(device)
             target = target.to(device)
             attr = attr.to(device)
@@ -171,7 +182,7 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
                                 pred_labels,
                                 sensitive_features=attrs)
 
-    torch.cuda.synchronize()
+    #!torch.cuda.synchronize() remove since mac does not support
     t2 = time.time()
 
     print(f"train ====> epcoh {epoch} loss: {np.mean(loss_batch):.4f} auc: {cur_auc:.4f} time: {t2 - t1:.4f}")
@@ -269,8 +280,31 @@ def validation(model, criterion, optimizer, validation_dataset_loader, epoch, re
 
     return loss, acc, cur_auc, preds, gts, attrs, [preds_by_attr_tmp, gts_by_attr_tmp, aucs_by_attr], [acc, dpd, dpr, eod, eor]
 
+def plot_metric(metric_history, metric_name, save_path):
+    """Plot and save a metric over epochs"""
+    plt.figure(figsize=(8,5))
+    plt.plot(range(len(metric_history)), metric_history, marker='o', linestyle='-')
+    plt.xlabel("Epochs")
+    plt.ylabel(metric_name)
+    plt.title(f"{metric_name} Over Epochs")
+    plt.grid(True)
+    plt.savefig(save_path)
+    plt.close()
+
+def plot_fairness_metrics(metric_values, metric_name, save_path):
+    """Plot fairness metrics over epochs"""
+    plt.figure(figsize=(8,5))
+    plt.plot(range(len(metric_values)), metric_values, marker='o', linestyle='-', color='r')
+    plt.xlabel("Epochs")
+    plt.ylabel(metric_name)
+    plt.title(f"Fairness Metric: {metric_name} Over Epochs")
+    plt.grid(True)
+    plt.savefig(save_path)
+    plt.close()
+
 
 if __name__ == '__main__':
+    # parser for command line
     args = parser.parse_args()
 
     if args.seed < 0:
@@ -279,14 +313,17 @@ if __name__ == '__main__':
 
     logger.log(f'===> random seed: {args.seed}')
 
+    # Saves all training parameters (args) to a file
     logger.configure(dir=args.result_dir, log_suffix='train')
 
     with open(os.path.join(args.result_dir, f'args_train.txt'), 'w') as f:
         json.dump(args.__dict__, f, indent=2)
 
+    # load train and test dataset
     trn_dataset = EyeFair(os.path.join(args.data_dir, 'train'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
     tst_dataset = EyeFair(os.path.join(args.data_dir, 'test'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
 
+    # This logs the dataset statistics
     logger.log(f'trn patients {len(trn_dataset)} with {len(trn_dataset)} samples, val patients {len(tst_dataset)} with {len(tst_dataset)} samples')
     
     train_dataset_loader = torch.utils.data.DataLoader(
@@ -303,7 +340,10 @@ if __name__ == '__main__':
     print(samples_per_attr)
     logger.log(samples_per_attr)
     imb_info = Identity_Info()
-
+    
+    # This code initializes log files 
+    # to track model performance, ensuring structured logging of accuracy, AUC, and fairness
+    # metrics for both the best and latest epochs
     best_global_perf_file = os.path.join(os.path.dirname(args.result_dir), f'best_{args.perf_file}')
     lastep_global_perf_file = os.path.join(os.path.dirname(args.result_dir), f'last_{args.perf_file}')
 
@@ -333,6 +373,7 @@ if __name__ == '__main__':
         predictor_head = nn.Identity()
 
     in_feat_to_final = 1280
+    # ! FIN layer creation
     if args.normalization_type == 'fin':
         ag_norm = Fair_Identity_Normalizer(imb_info.no_of_attr, dim=in_feat_to_final, mu=args.fin_mu, sigma=args.fin_sigma, momentum=args.fin_momentum) #  [0]*imb_info.no_of_attr, [1]*imb_info.no_of_attr
     elif args.normalization_type == 'lbn':
@@ -342,18 +383,22 @@ if __name__ == '__main__':
 
     if args.modality_types == 'ilm' or args.modality_types == 'rnflt':
         in_dim = 1
+        print(f"DEBUG: Requested model_type: {args.model_type}")
         model = create_model(model_type=args.model_type, in_dim=in_dim, out_dim=out_dim, include_final=False)
     elif 'bscan' in args.modality_types:
         in_dim = 200
+        print(f"DEBUG: Requested model_type: {args.model_type}")
         model = create_model(model_type=args.model_type, in_dim=in_dim, out_dim=out_dim)
     elif args.modality_types == 'rnflt+ilm':
         in_dim = 2
         model = OphBackbone(model_type=args.model_type, in_dim=in_dim, coef=args.fuse_coef)
     final_layer = nn.Linear(in_features=in_feat_to_final, out_features=out_dim, bias=False)
+    print(f"Initial model before wrapping in Sequential: {model}")
     model = nn.Sequential(model, ag_norm, final_layer)
     model = model.to(device)
 
-    scaler = torch.cuda.amp.GradScaler()
+    #!scaler = torch.cuda.amp.GradScaler()
+    scaler = torch.amp.GradScaler()  # ✅ Using this for MPS
 
     optimizer = AdamW(model.parameters(), lr=args.lr, betas=(0.0, 0.1), weight_decay=args.weight_decay)
     
@@ -381,9 +426,30 @@ if __name__ == '__main__':
     best_es_acc = sys.float_info.min
     best_es_auc = sys.float_info.min
     best_ep = 0
+    # initialize etrics storage# Initialize lists to store performance metrics for visualization
+    train_auc_history = []
+    val_auc_history = []
+    train_acc_history = []
+    val_acc_history = []
+
+    # Store fairness metrics
+    dpd_history = []
+    eod_history = []
+
     for epoch in range(start_epoch, args.epochs):
+        print(f"Model before training: {model}")
         train_loss, train_acc, train_auc, trn_preds, trn_gts, trn_attrs, trn_pred_gt_by_attrs, trn_other_metrics = train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, total_iteration, identity_Info=imb_info, time_window=args.time_window)
         test_loss, test_acc, test_auc, tst_preds, tst_gts, tst_attrs, tst_pred_gt_by_attrs, tst_other_metrics = validation(model, criterion, optimizer, validation_dataset_loader, epoch, identity_Info=imb_info)
+        # Store metrics for visualization
+        train_auc_history.append(train_auc)
+        val_auc_history.append(test_auc)
+        train_acc_history.append(train_acc)
+        val_acc_history.append(test_acc)
+
+        # Store Fairness Metrics
+        dpd_history.append(tst_other_metrics[1])  # Demographic Parity Difference
+        eod_history.append(tst_other_metrics[3])  # Equalized Odds Difference
+
         scheduler.step()
 
         trn_acc_groups = []
@@ -399,6 +465,7 @@ if __name__ == '__main__':
             auc_groups.append(auc_score(tst_pred_gt_by_attrs[0][i_group], tst_pred_gt_by_attrs[1][i_group]))
         es_acc = equity_scaled_accuracy(tst_preds, tst_gts, tst_attrs)
         es_auc = equity_scaled_AUC(tst_preds, tst_gts, tst_attrs)
+        
 
         if best_auc <= test_auc:
             best_auc = test_auc
@@ -477,5 +544,20 @@ if __name__ == '__main__':
                 auc_head_str = ', '.join([f'{x:.4f}' for x in best_auc_groups])
                 path_str = f'{args.result_dir}_auc{best_auc:.4f}'
                 f.write(f'{best_ep}, {best_es_acc:.4f}, {best_acc:.4f}, {acc_head_str}, {best_es_auc:.4f}, {best_auc:.4f}, {auc_head_str}, {best_tst_other_metrics[1]:.4f}, {best_tst_other_metrics[2]:.4f}, {best_tst_other_metrics[3]:.4f}, {best_tst_other_metrics[4]:.4f}, {path_str}\n')
+    # Create results directory if not exists
+    if not os.path.exists(args.result_dir):
+        os.makedirs(args.result_dir)
+
+    # Save AUC and Accuracy Graphs
+    plot_metric(train_auc_history, "Training AUC", os.path.join(args.result_dir, "train_auc.png"))
+    plot_metric(val_auc_history, "Validation AUC", os.path.join(args.result_dir, "val_auc.png"))
+    plot_metric(train_acc_history, "Training Accuracy", os.path.join(args.result_dir, "train_acc.png"))
+    plot_metric(val_acc_history, "Validation Accuracy", os.path.join(args.result_dir, "val_acc.png"))
+
+    # Save Fairness Metric Graphs
+    plot_fairness_metrics(dpd_history, "Demographic Parity Difference", os.path.join(args.result_dir, "dpd.png"))
+    plot_fairness_metrics(eod_history, "Equalized Odds Difference", os.path.join(args.result_dir, "eod.png"))
+
+    print("📊 Plots saved in", args.result_dir)
 
     os.rename(args.result_dir, f'{args.result_dir}_{args.seed}_auc{best_auc:.4f}')
