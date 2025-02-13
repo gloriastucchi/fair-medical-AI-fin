@@ -247,18 +247,21 @@ class Fair_Identity_Normalizer(nn.Module):
         super().__init__()
         self.num_attr = num_attr
         self.dim = dim
-
+        # nn.Parameter means these values are trainable and updated during backpropagation
         self.mus = nn.Parameter(torch.randn(self.num_attr, self.dim)*mu)
         self.sigmas = nn.Parameter(torch.randn(self.num_attr, self.dim)*sigma)
+        
         if test:
             self.sigmas = nn.Parameter(torch.ones(self.num_attr, self.dim)*sigma)
         self.eps = 1e-6
         self.momentum = momentum
 
-
+    # μA and 𝜎𝐴 are learned to reduce the loss through backpropagation 
+    # !but they are divided by the feature group-wise to ensure fairness
     def forward(self, x, attr):
         x_clone = x.clone()
         for idx in range(x.shape[0]):
+            #  values are different for each group (attribute), meaning the model adjusts them to best fit each demographic group
             x[idx,:] = (x[idx,:] - self.mus[attr[idx], :])/( torch.log(1+torch.exp(self.sigmas[attr[idx], :])) + self.eps)
         x = (1-self.momentum)*x + self.momentum*x_clone
 
