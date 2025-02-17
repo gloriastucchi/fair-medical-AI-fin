@@ -233,6 +233,7 @@ class Attribute_Grouped_Normalizer(nn.Module):
             out_str = 'Attribute-Grouped Normalizer is not initialized yet.'
         return out_str
 
+# the following is at model level (not at layer level)
 def forward_model_with_fin(model, data, attr):
     feat = model[0](data)
     if type(model[1]).__name__ != 'Fair_Identity_Normalizer':
@@ -248,6 +249,7 @@ class Fair_Identity_Normalizer(nn.Module):
         self.num_attr = num_attr
         self.dim = dim
         # nn.Parameter means these values are trainable and updated during backpropagation
+        # initialized as random values with small scales
         self.mus = nn.Parameter(torch.randn(self.num_attr, self.dim)*mu)
         self.sigmas = nn.Parameter(torch.randn(self.num_attr, self.dim)*sigma)
         
@@ -258,6 +260,11 @@ class Fair_Identity_Normalizer(nn.Module):
 
     # μA and 𝜎𝐴 are learned to reduce the loss through backpropagation 
     # !but they are divided by the feature group-wise to ensure fairness
+    # we only adjusts the input features
+    # normalizes each row of x using the corresponding group’s mean and std
+    # the dimentions are x (batch_size, feature_dim), mus (num_attr, feature_dim), sigmas (num_attr, feature_dim)
+    # where num_attr is the number of demographic groups for example, and feature_dim is the number of features 
+    # which is strictly dependent on the model architecture (backbone. here efficientnet_b1)
     def forward(self, x, attr):
         x_clone = x.clone()
         for idx in range(x.shape[0]):
