@@ -270,6 +270,7 @@ class Fair_Identity_Normalizer(nn.Module):
         for idx in range(x.shape[0]):
             #  values are different for each group (attribute), meaning the model adjusts them to best fit each demographic group
             x[idx,:] = (x[idx,:] - self.mus[attr[idx], :])/( torch.log(1+torch.exp(self.sigmas[attr[idx], :])) + self.eps)
+            # softplus transformation preventing negative values and ensuring numerical stability
         x = (1-self.momentum)*x + self.momentum*x_clone
 
         return x
