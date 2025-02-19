@@ -30,7 +30,9 @@ class Identity_Info(NamedTuple):
     no_of_classes: int = 2
     no_of_attr: int = 3
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+#device = torch.device('cpu')
+device = torch.device("mps")  # Uses Apple GPU
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -45,8 +47,8 @@ parser.add_argument('--batch-size', default=256, type=int,
 
 parser.add_argument('--epochs', default=10, type=int, metavar='N',
                     help='number of total epochs to run')
-
-parser.add_argument('--lr', '--learning-rate', default=0.05, type=float,
+#lr 0.05 original
+parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
@@ -110,7 +112,10 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
     for i, (input, target, attr) in enumerate(train_dataset_loader):
         optimizer.zero_grad()
 
-        with torch.cuda.amp.autocast():
+         #with torch.cuda.amp.autocast():
+        # NEW CODE (MPS-Compatible)
+        # float32 cause float16 does not support completely the operations and i would get some Nan predictions
+        with torch.autocast(device_type="mps", dtype=torch.float32):
             input = input.to(device)
             target = target.to(device)
 
@@ -157,7 +162,7 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
                                 pred_labels,
                                 sensitive_features=attrs)
 
-    torch.cuda.synchronize()
+    #!torch.cuda.synchronize() remove since mac does not support
     t2 = time.time()
 
     print(f"train ====> epcoh {epoch} loss: {np.mean(loss_batch):.4f} auc: {cur_auc:.4f} time: {t2 - t1:.4f}")
