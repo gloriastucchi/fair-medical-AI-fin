@@ -285,6 +285,10 @@ if __name__ == '__main__':
     validation_dataset_loader = torch.utils.data.DataLoader(
         tst_dataset, batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True, drop_last=False)
+    
+    test_dataset_loader = torch.utils.data.DataLoader(
+    tst_dataset, batch_size=args.batch_size, shuffle=False,
+    num_workers=args.workers, pin_memory=True, drop_last=False)
 
     _, samples_per_attr = get_num_by_group(train_dataset_loader)
     print(f'group information:')
