@@ -76,8 +76,7 @@ parser.add_argument('--modality_types', default='rnflt', type=str, help='rnflt|b
 parser.add_argument('--fuse_coef', default=1.0, type=float)
 parser.add_argument('--perf_file', default='', type=str)
 parser.add_argument('--attribute_type', default='race', type=str, help='race|gender')
-
-                    
+            
 def set_random_seed(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
@@ -274,7 +273,7 @@ if __name__ == '__main__':
         json.dump(args.__dict__, f, indent=2)
 
     trn_dataset = EyeFair(os.path.join(args.data_dir, 'train'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
-    tst_dataset = EyeFair(os.path.join(args.data_dir, 'test'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
+    tst_dataset = EyeFair(os.path.join(args.data_dir, 'val'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
 
     logger.log(f'trn patients {len(trn_dataset)} with {len(trn_dataset)} samples, val patients {len(tst_dataset)} with {len(tst_dataset)} samples')
 

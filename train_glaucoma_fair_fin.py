@@ -321,7 +321,7 @@ if __name__ == '__main__':
 
     # load train and test dataset
     trn_dataset = EyeFair(os.path.join(args.data_dir, 'train'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
-    tst_dataset = EyeFair(os.path.join(args.data_dir, 'test'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
+    tst_dataset = EyeFair(os.path.join(args.data_dir, 'val'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
 
     # This logs the dataset statistics
     logger.log(f'trn patients {len(trn_dataset)} with {len(trn_dataset)} samples, val patients {len(tst_dataset)} with {len(tst_dataset)} samples')
@@ -437,7 +437,7 @@ if __name__ == '__main__':
     eod_history = []
 
     for epoch in range(start_epoch, args.epochs):
-        print(f"Model before training: {model}")
+        #print(f"Model before training: {model}")
         train_loss, train_acc, train_auc, trn_preds, trn_gts, trn_attrs, trn_pred_gt_by_attrs, trn_other_metrics = train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, total_iteration, identity_Info=imb_info, time_window=args.time_window)
         test_loss, test_acc, test_auc, tst_preds, tst_gts, tst_attrs, tst_pred_gt_by_attrs, tst_other_metrics = validation(model, criterion, optimizer, validation_dataset_loader, epoch, identity_Info=imb_info)
         # Store metrics for visualization
