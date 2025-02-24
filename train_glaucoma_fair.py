@@ -77,14 +77,27 @@ parser.add_argument('--fuse_coef', default=1.0, type=float)
 parser.add_argument('--perf_file', default='', type=str)
 parser.add_argument('--attribute_type', default='race', type=str, help='race|gender')
             
+#def set_random_seed(seed):
+#    torch.manual_seed(seed)
+#    torch.cuda.manual_seed(seed)
+#    torch.cuda.manual_seed_all(seed) # if use multi-GPU
+#    torch.backends.cudnn.deterministic = False
+#    torch.backends.cudnn.benchmark = True
+ #   np.random.seed(seed)
+ #   random.seed(seed)
+
 def set_random_seed(seed):
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed) # if use multi-GPU
-    torch.backends.cudnn.deterministic = False
-    torch.backends.cudnn.benchmark = True
-    np.random.seed(seed)
+    # ✅ Set random seed for Python's random module
     random.seed(seed)
+    
+    # ✅ Set random seed for NumPy
+    np.random.seed(seed)
+    
+    # ✅ Set random seed for PyTorch (works for CPU, CUDA, and MPS)
+    torch.manual_seed(seed)
+    
+    # ✅ Optional: Ensure deterministic behavior (may reduce performance)
+    torch.use_deterministic_algorithms(True, warn_only=True)
 
 def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, total_iteration, identity_Info=None):
     global device

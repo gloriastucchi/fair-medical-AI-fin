@@ -90,13 +90,17 @@ parser.add_argument('--attribute_type', default='race', type=str, help='race|gen
 
                     
 def set_random_seed(seed):
-    #torch.manual_seed(seed)
-    #torch.cuda.manual_seed(seed)
-    #!torch.cuda.manual_seed_all(seed) # if use multi-GPU
-    #torch.backends.cudnn.deterministic = False
-    #torch.backends.cudnn.benchmark = True
-    np.random.seed(seed)
+    # ✅ Set random seed for Python's random module
     random.seed(seed)
+    
+    # ✅ Set random seed for NumPy
+    np.random.seed(seed)
+    
+    # ✅ Set random seed for PyTorch (works for CPU, CUDA, and MPS)
+    torch.manual_seed(seed)
+    
+    # ✅ Optional: Ensure deterministic behavior (may reduce performance)
+    torch.use_deterministic_algorithms(True, warn_only=True)
 
 activation = {}
 def get_activation(name):
