@@ -1,0 +1,214 @@
+Logging to ./results/fin/seed_4
+trn patients 2100 with 2100 samples, val patients 900 with 900 samples
+group information:
+[700 700 700]
+---- best AUC 0.8460 at epoch 0
+---- best AUC at 0-attr 0.8665 at epoch 0
+---- best AUC at 1-attr 0.8036 at epoch 0
+---- best AUC at 2-attr 0.8496 at epoch 0
+-----------------------------
+| epoch          | 0        |
+| trn_acc        | 0.673    |
+| trn_acc_class0 | 0.67     |
+| trn_acc_class1 | 0.693    |
+| trn_acc_class2 | 0.657    |
+| trn_auc        | 0.734    |
+| trn_auc_class0 | 0.726    |
+| trn_auc_class1 | 0.75     |
+| trn_auc_class2 | 0.704    |
+| trn_dpd        | 0.16     |
+| trn_dpr        | 0.709    |
+| trn_eod        | 0.15     |
+| trn_eor        | 0.771    |
+| trn_loss       | 0.603    |
+| val_acc        | 0.763    |
+| val_acc_class0 | 0.803    |
+| val_acc_class1 | 0.71     |
+| val_acc_class2 | 0.777    |
+| val_auc        | 0.846    |
+| val_auc_class0 | 0.867    |
+| val_auc_class1 | 0.804    |
+| val_auc_class2 | 0.85     |
+| val_dpd        | 0.177    |
+| val_dpr        | 0.697    |
+| val_eod        | 0.21     |
+| val_eor        | 0.358    |
+| val_es_acc     | 0.69     |
+| val_es_auc     | 0.793    |
+| val_loss       | 0.473    |
+-----------------------------
+---- best AUC 0.8506 at epoch 1
+---- best AUC at 0-attr 0.8662 at epoch 1
+---- best AUC at 1-attr 0.8032 at epoch 1
+---- best AUC at 2-attr 0.8538 at epoch 1
+-----------------------------
+| epoch          | 1        |
+| trn_acc        | 0.728    |
+| trn_acc_class0 | 0.734    |
+| trn_acc_class1 | 0.721    |
+| trn_acc_class2 | 0.729    |
+| trn_auc        | 0.801    |
+| trn_auc_class0 | 0.814    |
+| trn_auc_class1 | 0.797    |
+| trn_auc_class2 | 0.771    |
+| trn_dpd        | 0.154    |
+| trn_dpr        | 0.718    |
+| trn_eod        | 0.0979   |
+| trn_eor        | 0.649    |
+| trn_loss       | 0.538    |
+| val_acc        | 0.777    |
+| val_acc_class0 | 0.823    |
+| val_acc_class1 | 0.72     |
+| val_acc_class2 | 0.787    |
+| val_auc        | 0.851    |
+| val_auc_class0 | 0.866    |
+| val_auc_class1 | 0.803    |
+| val_auc_class2 | 0.854    |
+| val_dpd        | 0.19     |
+| val_dpr        | 0.665    |
+| val_eod        | 0.215    |
+| val_eor        | 0.261    |
+| val_es_acc     | 0.698    |
+| val_es_auc     | 0.798    |
+| val_loss       | 0.479    |
+-----------------------------
+---- best AUC 0.8555 at epoch 2
+---- best AUC at 0-attr 0.8701 at epoch 2
+---- best AUC at 1-attr 0.8004 at epoch 2
+---- best AUC at 2-attr 0.8659 at epoch 2
+-----------------------------
+| epoch          | 2        |
+| trn_acc        | 0.722    |
+| trn_acc_class0 | 0.733    |
+| trn_acc_class1 | 0.724    |
+| trn_acc_class2 | 0.71     |
+| trn_auc        | 0.802    |
+| trn_auc_class0 | 0.81     |
+| trn_auc_class1 | 0.8      |
+| trn_auc_class2 | 0.78     |
+| trn_dpd        | 0.194    |
+| trn_dpr        | 0.674    |
+| trn_eod        | 0.15     |
+| trn_eor        | 0.553    |
+| trn_loss       | 0.537    |
+| val_acc        | 0.773    |
+| val_acc_class0 | 0.83     |
+| val_acc_class1 | 0.713    |
+| val_acc_class2 | 0.777    |
+| val_auc        | 0.856    |
+| val_auc_class0 | 0.87     |
+| val_auc_class1 | 0.8      |
+| val_auc_class2 | 0.866    |
+| val_dpd        | 0.22     |
+| val_dpr        | 0.625    |
+| val_eod        | 0.251    |
+| val_eor        | 0.232    |
+| val_es_acc     | 0.691    |
+| val_es_auc     | 0.792    |
+| val_loss       | 0.472    |
+-----------------------------
+---- best AUC 0.8560 at epoch 3
+---- best AUC at 0-attr 0.8765 at epoch 3
+---- best AUC at 1-attr 0.8078 at epoch 3
+---- best AUC at 2-attr 0.8609 at epoch 3
+-----------------------------
+| epoch          | 3        |
+| trn_acc        | 0.754    |
+| trn_acc_class0 | 0.771    |
+| trn_acc_class1 | 0.734    |
+| trn_acc_class2 | 0.756    |
+| trn_auc        | 0.827    |
+| trn_auc_class0 | 0.859    |
+| trn_auc_class1 | 0.796    |
+| trn_auc_class2 | 0.811    |
+| trn_dpd        | 0.237    |
+| trn_dpr        | 0.618    |
+| trn_eod        | 0.207    |
+| trn_eor        | 0.417    |
+| trn_loss       | 0.507    |
+| val_acc        | 0.768    |
+| val_acc_class0 | 0.82     |
+| val_acc_class1 | 0.713    |
+| val_acc_class2 | 0.77     |
+| val_auc        | 0.856    |
+| val_auc_class0 | 0.876    |
+| val_auc_class1 | 0.808    |
+| val_auc_class2 | 0.861    |
+| val_dpd        | 0.193    |
+| val_dpr        | 0.642    |
+| val_eod        | 0.202    |
+| val_eor        | 0.235    |
+| val_es_acc     | 0.692    |
+| val_es_auc     | 0.797    |
+| val_loss       | 0.51     |
+-----------------------------
+---- best AUC 0.8560 at epoch 3
+---- best AUC at 0-attr 0.8765 at epoch 3
+---- best AUC at 1-attr 0.8078 at epoch 3
+---- best AUC at 2-attr 0.8609 at epoch 3
+-----------------------------
+| epoch          | 4        |
+| trn_acc        | 0.753    |
+| trn_acc_class0 | 0.777    |
+| trn_acc_class1 | 0.741    |
+| trn_acc_class2 | 0.741    |
+| trn_auc        | 0.832    |
+| trn_auc_class0 | 0.853    |
+| trn_auc_class1 | 0.821    |
+| trn_auc_class2 | 0.803    |
+| trn_dpd        | 0.284    |
+| trn_dpr        | 0.576    |
+| trn_eod        | 0.245    |
+| trn_eor        | 0.402    |
+| trn_loss       | 0.506    |
+| val_acc        | 0.768    |
+| val_acc_class0 | 0.82     |
+| val_acc_class1 | 0.72     |
+| val_acc_class2 | 0.763    |
+| val_auc        | 0.848    |
+| val_auc_class0 | 0.859    |
+| val_auc_class1 | 0.796    |
+| val_auc_class2 | 0.862    |
+| val_dpd        | 0.213    |
+| val_dpr        | 0.619    |
+| val_eod        | 0.237    |
+| val_eor        | 0.159    |
+| val_es_acc     | 0.695    |
+| val_es_auc     | 0.787    |
+| val_loss       | 0.519    |
+-----------------------------
+---- best AUC 0.8592 at epoch 5
+---- best AUC at 0-attr 0.8770 at epoch 5
+---- best AUC at 1-attr 0.8043 at epoch 5
+---- best AUC at 2-attr 0.8678 at epoch 5
+-----------------------------
+| epoch          | 5        |
+| trn_acc        | 0.773    |
+| trn_acc_class0 | 0.781    |
+| trn_acc_class1 | 0.769    |
+| trn_acc_class2 | 0.77     |
+| trn_auc        | 0.852    |
+| trn_auc_class0 | 0.856    |
+| trn_auc_class1 | 0.847    |
+| trn_auc_class2 | 0.839    |
+| trn_dpd        | 0.229    |
+| trn_dpr        | 0.633    |
+| trn_eod        | 0.17     |
+| trn_eor        | 0.462    |
+| trn_loss       | 0.476    |
+| val_acc        | 0.781    |
+| val_acc_class0 | 0.807    |
+| val_acc_class1 | 0.737    |
+| val_acc_class2 | 0.8      |
+| val_auc        | 0.859    |
+| val_auc_class0 | 0.877    |
+| val_auc_class1 | 0.804    |
+| val_auc_class2 | 0.868    |
+| val_dpd        | 0.227    |
+| val_dpr        | 0.655    |
+| val_eod        | 0.274    |
+| val_eor        | 0.3      |
+| val_es_acc     | 0.717    |
+| val_es_auc     | 0.794    |
+| val_loss       | 0.493    |
+-----------------------------
