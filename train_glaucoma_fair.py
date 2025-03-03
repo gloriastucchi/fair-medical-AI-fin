@@ -51,7 +51,7 @@ parser.add_argument('--epochs', default=10, type=int, metavar='N',
 parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 
-parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
+parser.add_argument('--momentum', default=0.1, type=float, metavar='M',
                     help='momentum')
 
 parser.add_argument('--wd', '--weight-decay', default=6e-5, type=float,
@@ -88,16 +88,17 @@ parser.add_argument('--attribute_type', default='race', type=str, help='race|gen
 
 def set_random_seed(seed):
     # ✅ Set random seed for Python's random module
-    random.seed(seed)
-    
-    # ✅ Set random seed for NumPy
+    #random.seed(seed)
     np.random.seed(seed)
+    random.seed(seed)
+    # ✅ Set random seed for NumPy
+    #np.random.seed(seed)
     
     # ✅ Set random seed for PyTorch (works for CPU, CUDA, and MPS)
-    torch.manual_seed(seed)
+    #torch.manual_seed(seed)
     
     # ✅ Optional: Ensure deterministic behavior (may reduce performance)
-    torch.use_deterministic_algorithms(True, warn_only=True)
+    # torch.use_deterministic_algorithms(True, warn_only=True)
 
 def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, total_iteration, identity_Info=None):
     global device
@@ -286,7 +287,7 @@ if __name__ == '__main__':
         json.dump(args.__dict__, f, indent=2)
 
     trn_dataset = EyeFair(os.path.join(args.data_dir, 'train'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
-    tst_dataset = EyeFair(os.path.join(args.data_dir, 'val'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
+    tst_dataset = EyeFair(os.path.join(args.data_dir, 'test'), modality_type=args.modality_types, task=args.task, resolution=args.image_size, attribute_type=args.attribute_type)
 
     logger.log(f'trn patients {len(trn_dataset)} with {len(trn_dataset)} samples, val patients {len(tst_dataset)} with {len(tst_dataset)} samples')
 
