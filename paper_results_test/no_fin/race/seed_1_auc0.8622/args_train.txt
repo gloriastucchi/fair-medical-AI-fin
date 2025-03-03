@@ -1,0 +1,22 @@
+{
+  "workers": 8,
+  "batch_size": 6,
+  "epochs": 10,
+  "lr": 5e-05,
+  "momentum": 0.1,
+  "weight_decay": 6e-05,
+  "seed": 1,
+  "start_epoch": 0,
+  "pretrained_weights": "",
+  "result_dir": "./paper_results_test/no_fin/race/seed",
+  "data_dir": "/Users/gloriastucchi/Desktop/dataset/",
+  "model_type": "efficientnet",
+  "task": "cls",
+  "image_size": 224,
+  "loss_type": "bce",
+  "progression_outcome": "",
+  "modality_types": "rnflt",
+  "fuse_coef": 1.0,
+  "perf_file": "",
+  "attribute_type": "race"
+}
