@@ -51,7 +51,7 @@ parser.add_argument('--epochs', default=10, type=int, metavar='N',
 parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 
-parser.add_argument('--momentum', default=0.1, type=float, metavar='M',
+parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
 
 parser.add_argument('--wd', '--weight-decay', default=6e-5, type=float,
