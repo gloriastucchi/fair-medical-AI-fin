@@ -1,2 +1,0 @@
-Logging to ./results/crosssectional_rnflt_race/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6
-trn patients 2100 with 2100 samples, val patients 900 with 900 samples
