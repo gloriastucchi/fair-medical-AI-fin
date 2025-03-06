@@ -1,0 +1,6 @@
+epoch, es_acc, acc, acc_class0, acc_class1, acc_class2, es_auc, auc, auc_class0, auc_class1, auc_class2, dpd, dpr, eod, eor, path
+4, 0.6945, 0.7856, 0.8300, 0.7200, 0.8067, 0.7993, 0.8615, 0.8890, 0.8125, 0.8601, 0.2100, 0.6786, 0.2850, 0.3034, ./results/crosssectional_rnflt_fin_race_ablation_of_sigma/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8615
+2, 0.7147, 0.7989, 0.8200, 0.7400, 0.8367, 0.7784, 0.8573, 0.8798, 0.7937, 0.8726, 0.1867, 0.6989, 0.2191, 0.3486, ./results/crosssectional_rnflt_fin_race_ablation_of_sigma/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8573
+4, 0.6984, 0.7744, 0.8100, 0.7200, 0.7933, 0.7937, 0.8560, 0.8718, 0.8046, 0.8672, 0.1633, 0.7083, 0.1853, 0.3426, ./results/crosssectional_rnflt_fin_race_ablation_of_sigma/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8560
+3, 0.7231, 0.7778, 0.7967, 0.7400, 0.7967, 0.7686, 0.8538, 0.8772, 0.7907, 0.8783, 0.1967, 0.6529, 0.2016, 0.2354, ./results/crosssectional_rnflt_fin_race_ablation_of_sigma/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8538
+1, 0.6996, 0.7711, 0.8200, 0.7200, 0.7733, 0.7854, 0.8532, 0.8783, 0.7972, 0.8583, 0.1733, 0.6829, 0.1931, 0.2675, ./results/crosssectional_rnflt_fin_race_ablation_of_sigma/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8532

@@ -11,7 +11,7 @@ PERF_FILE=${MODEL_TYPE}_${MODALITY_TYPE}_${ATTRIBUTE_TYPE}.csv
 NORMALIZATION_TYPE=fin
 PERF_FILE=${MODEL_TYPE}_${NORMALIZATION_TYPE}_${MODALITY_TYPE}_${ATTRIBUTE_TYPE}.csv
 python train_glaucoma_fair_fin.py \
-	--data_dir /path/to/EyeFair/dataset \
+	--data_dir /Users/gloriastucchi/Desktop/dataset \
 	--result_dir ./results/crosssectional_${MODALITY_TYPE}_${NORMALIZATION_TYPE}_${ATTRIBUTE_TYPE}_ablation_of_sigma/fullysup_${MODEL_TYPE}_${MODALITY_TYPE}_Task${TASK}_lr${LR}_bz${BATCH_SIZE} \
 	--model_type ${MODEL_TYPE} \
 	--image_size 200 \

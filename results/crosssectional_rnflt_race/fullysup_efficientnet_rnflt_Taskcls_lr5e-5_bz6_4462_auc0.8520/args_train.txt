@@ -1,0 +1,22 @@
+{
+  "workers": 8,
+  "batch_size": 6,
+  "epochs": 10,
+  "lr": 5e-05,
+  "momentum": 0.1,
+  "weight_decay": 0.0,
+  "seed": 4462,
+  "start_epoch": 0,
+  "pretrained_weights": "",
+  "result_dir": "./results/crosssectional_rnflt_race/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6",
+  "data_dir": "/Users/gloriastucchi/Desktop/dataset",
+  "model_type": "efficientnet",
+  "task": "cls",
+  "image_size": 200,
+  "loss_type": "bce",
+  "progression_outcome": "",
+  "modality_types": "rnflt",
+  "fuse_coef": 1.0,
+  "perf_file": "efficientnet_rnflt_race.csv",
+  "attribute_type": "race"
+}
