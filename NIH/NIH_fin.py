@@ -20,7 +20,7 @@ class FairChestXrayModel(nn.Module):
         super(FairChestXrayModel, self).__init__()
         self.base_model = base_model
         self.fin = FairIdentityNormalization(feature_dim, num_groups)
-        self.fc = nn.Linear(feature_dim, 14)  # 14 diseases
+        self.fc = nn.Linear(feature_dim, 15)  # 15 diseases
 
     def forward(self, x, identity_group):
         features = self.base_model(x)

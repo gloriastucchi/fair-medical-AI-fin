@@ -13,5 +13,5 @@ class ChestXrayModel(nn.Module):
 
 # Example usage
 if __name__ == "__main__":
-    model = ChestXrayModel(num_classes=14)  # 14 disease labels
+    model = ChestXrayModel(num_classes=15)  # 15 disease labels
     print(model)
