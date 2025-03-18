@@ -47,6 +47,7 @@ criterion = nn.BCEWithLogitsLoss()
 total_loss = 0
 all_predictions = []
 all_labels = []
+all_groups = []
 
 with torch.no_grad():  # No gradient updates needed during testing
     for batch in test_loader:
@@ -56,6 +57,7 @@ with torch.no_grad():  # No gradient updates needed during testing
             identity_group = identity_group.to(device)
         else:
             images, labels = batch[:2]  # ✅ Extract only the first two values for standard model
+            identity_group = None
 
         images, labels = images.to(device), labels.to(device)
 
@@ -69,9 +71,18 @@ with torch.no_grad():  # No gradient updates needed during testing
         all_predictions.extend(predictions)
         all_labels.extend(labels.cpu().numpy())
 
+        if args.use_fin:
+            all_groups.extend(identity_group.cpu().numpy())  # ✅ Store group info from batch
+        else:
+            # ✅ Infer identity_group directly from test_dataset
+            all_groups = np.array([test_dataset[i][2].item() for i in range(len(test_dataset))])
+
+
 # Convert to NumPy arrays
 all_predictions = np.array(all_predictions)
 all_labels = np.array(all_labels)
+all_groups = np.array(all_groups)  # Ensure groups are always stored
+
 
 # ✅ Compute AUC-ROC Score per class
 auc_per_class = []
@@ -87,14 +98,26 @@ mean_auc = np.nanmean(auc_per_class)  # Ignore NaNs if any class is missing
 
 # ✅ Compute Accuracy with Threshold
 threshold = 0.5
-binary_predictions = (all_predictions >= threshold).astype(int)  # Convert probabilities to 0/1
-accuracy = accuracy_score(all_labels.flatten(), binary_predictions.flatten())
+binary_predictions = (all_predictions >= threshold).astype(int)
+overall_accuracy = accuracy_score(all_labels.flatten(), binary_predictions.flatten())
 
-# ✅ Print Results
-avg_loss = total_loss / len(test_loader)
-print(f"✅ Test Loss: {avg_loss:.4f}")
-print(f"✅ Mean AUC-ROC: {mean_auc:.4f}")
-print(f"✅ Accuracy: {accuracy:.4f}")
+male_mask = np.array(all_groups) == 0
+female_mask = np.array(all_groups) == 1
+
+# ✅ Ensure all_masks match `all_labels` in shape
+male_mask = male_mask[:len(all_labels)]  
+female_mask = female_mask[:len(all_labels)]  
+
+
+accuracy_male = accuracy_score(all_labels[male_mask].flatten(), binary_predictions[male_mask].flatten()) if male_mask.any() else float("nan")
+accuracy_female = accuracy_score(all_labels[female_mask].flatten(), binary_predictions[female_mask].flatten()) if female_mask.any() else float("nan")
+
+# ✅ Print Results for FIN & Non-FIN
+model_type = "FIN Model" if args.use_fin else "Standard Model"
+print(f"\n✅ {model_type} Evaluation Results:")
+print(f"   🔹 Accuracy (Male):   {accuracy_male:.4f}")
+print(f"   🔹 Accuracy (Female): {accuracy_female:.4f}")
+print(f"   🔹 Overall Accuracy:  {overall_accuracy:.4f}")
 
 # Save predictions for further analysis
 np.save("test_predictions.npy", all_predictions)
