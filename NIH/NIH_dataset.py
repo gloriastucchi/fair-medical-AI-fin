@@ -4,16 +4,16 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 from PIL import Image
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 class ChestXrayDataset(Dataset):
-    def __init__(self, csv_file, image_folder, image_list, transform=None, subset_size=500):
+    def __init__(self, csv_file, image_folder, image_list, transform=None, subset_size=None):
         self.data = pd.read_csv(csv_file)
         self.image_folder = image_folder
-        print(f"✅ Available columns in dataset: {self.data.columns.tolist()}")
-
         self.transform = transform
 
-        # ✅ Define all 15 possible labels from the full dataset
+        # Define all 15 possible labels from the full dataset
         self.all_labels = [
             'Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema', 'Effusion',
             'Emphysema', 'Fibrosis', 'Hernia', 'Infiltration', 'Mass',
@@ -30,27 +30,68 @@ class ChestXrayDataset(Dataset):
         if subset_size and len(self.data) > subset_size:
             self.data = self.data.sample(n=subset_size, random_state=42)
 
-        # ✅ One-hot encode labels and ensure 15 columns
+        # One-hot encode labels and ensure 15 columns
         label_columns = self.data["Finding Labels"].str.get_dummies(sep="|")
 
-        # ✅ Ensure all 15 labels exist, even if some are missing from the subset
+        # Ensure all 15 labels exist, even if some are missing from the subset
         for label in self.all_labels:
             if label not in label_columns.columns:
                 label_columns[label] = 0  # Add missing labels as zeros
 
-        # ✅ Reorder columns to match the correct order
+        # Reorder columns to match the correct order
         label_columns = label_columns[self.all_labels]
         self.labels = label_columns.values
 
-        # ✅ Print the number of classes detected (should always be 15)
-        print(f"✅ Number of classes in dataset: {self.labels.shape[1]} (Expected: 15)")
+        # Calculate per-class analytics
+        self.calculate_class_statistics()
 
-        # Calculate and print gender percentages
+        # Plot class distributions
+        self.plot_class_distributions()
+
+    def calculate_class_statistics(self):
+        # Calculate the number of positive samples for each class
+        positive_counts = self.labels.sum(axis=0)
+        total_samples = len(self.data)
+
+        print("\n📊 Per-Class Statistics:")
+        for idx, label in enumerate(self.all_labels):
+            count = positive_counts[idx]
+            prevalence = (count / total_samples) * 100
+            print(f"  🔹 {label}:")
+            print(f"     - Positive Samples: {count}")
+            print(f"     - Prevalence: {prevalence:.2f}%\n")
+
+    def plot_class_distributions(self):
+        # Overall class distribution
+        positive_counts = self.labels.sum(axis=0)
+        total_samples = len(self.data)
+        prevalence = (positive_counts / total_samples) * 100
+
+        plt.figure(figsize=(12, 6))
+        sns.barplot(x=self.all_labels, y=prevalence, palette='viridis')
+        plt.xticks(rotation=45, ha='right')
+        plt.xlabel('Conditions')
+        plt.ylabel('Prevalence (%)')
+        plt.title('Overall Class Distribution')
+        plt.tight_layout()
+        plt.show()
+
+        # Class distribution by gender
         if "Patient Gender" in self.data.columns:
-            gender_counts = self.data["Patient Gender"].value_counts(normalize=True) * 100
-            print("\n📊 Gender Distribution in Subset:")
-            print(f"  🧑 Male:   {gender_counts.get('M', 0):.2f}%")
-            print(f"  👩 Female: {gender_counts.get('F', 0):.2f}%\n")
+            gender_groups = self.data.groupby("Patient Gender")
+            for gender, group in gender_groups:
+                gender_labels = group["Finding Labels"].str.get_dummies(sep="|")
+                gender_counts = gender_labels.sum(axis=0)
+                gender_prevalence = (gender_counts / len(group)) * 100
+
+                plt.figure(figsize=(12, 6))
+                sns.barplot(x=self.all_labels, y=gender_prevalence, palette='viridis')
+                plt.xticks(rotation=45, ha='right')
+                plt.xlabel('Conditions')
+                plt.ylabel('Prevalence (%)')
+                plt.title(f'Class Distribution for {"Male" if gender == "M" else "Female"} Patients')
+                plt.tight_layout()
+                plt.show()
 
     def __len__(self):
         return len(self.data)
@@ -78,7 +119,6 @@ class ChestXrayDataset(Dataset):
 
         return image, label, identity_group
 
-
 # Define transformations
 transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=3),  # Convert grayscale to 3-channel RGB
@@ -87,8 +127,6 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])  # Match 3-channel shape
 ])
 
-
-# Example usage
 if __name__ == "__main__":
     dataset = ChestXrayDataset(
         csv_file="/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv",
