@@ -90,7 +90,8 @@ class ChestXrayDataset(Dataset):
         plt.ylabel('Prevalence (%)')
         plt.title('Overall Class Distribution')
         plt.tight_layout()
-        plt.show()
+        plot_filename = f"dataset_distribution.png"
+        plt.savefig(os.path.join('NIH/dataset_distributions', plot_filename)) 
 
         # Class distribution by gender
         if "Patient Gender" in self.data.columns:
@@ -122,8 +123,8 @@ class ChestXrayDataset(Dataset):
                 plt.ylabel('Prevalence (%)')
                 plt.title(f'Class Distribution for {"Male" if gender == "M" else "Female"} Patients')
                 plt.tight_layout()
-                plt.show()
-
+                plot_filename = f"gender_distribution_{gender}.png"
+                plt.savefig(os.path.join('NIH/dataset_distributions', plot_filename)) 
 
     def __len__(self):
         return len(self.data)
