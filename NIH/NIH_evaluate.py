@@ -34,7 +34,7 @@ IMAGE_FOLDER = "/Users/gloriastucchi/Desktop/NIH/images/"
 TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"
 
 # Load test dataset
-test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform, subset_size=200)
+test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform, subset_size=500)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 # Choose Model Based on Argument
