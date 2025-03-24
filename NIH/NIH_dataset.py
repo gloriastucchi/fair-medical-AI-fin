@@ -20,18 +20,23 @@ class ChestXrayDataset(Dataset):
             'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax', 'No Finding'
         ]
 
+        print("all labels", self.all_labels)
+
         # Filter dataset based on train/test split
         with open(image_list, "r") as f:
             self.image_names = set(f.read().splitlines())
         
         self.data = self.data[self.data["Image Index"].isin(self.image_names)]
+        print("data", self.data)
 
         # Apply subset sampling (only for training, not testing)
         if subset_size and len(self.data) > subset_size:
             self.data = self.data.sample(n=subset_size, random_state=42)
 
         # One-hot encode labels and ensure 15 columns
+        print("onehot encoding", self.data["Finding Labels"])
         label_columns = self.data["Finding Labels"].str.get_dummies(sep="|")
+        print("label columns after get dummies", label_columns)
 
         # Ensure all 15 labels exist, even if some are missing from the subset
         for label in self.all_labels:
@@ -39,8 +44,10 @@ class ChestXrayDataset(Dataset):
                 label_columns[label] = 0  # Add missing labels as zeros
 
         label_columns = label_columns[self.all_labels]
+        print("label columns", label_columns)
         self.labels = label_columns.values
-
+        print("labels", self.labels)
+        print("self data", self.data)
         self.calculate_statistics()
         self.plot_class_distributions()
 
@@ -61,7 +68,10 @@ class ChestXrayDataset(Dataset):
             print(f"Percentage of females: {(female_count / total_samples) * 100:.2f}%")
 
         # Disease prevalence
+        print("self labels", self.labels)
+        # axes 0 means it will sum the columns
         positive_counts = self.labels.sum(axis=0)
+        print("\nTotal number of positive counts:", positive_counts)
         print("\nPrevalence of each disease:")
         for idx, label in enumerate(self.all_labels):
             prevalence = (positive_counts[idx] / total_samples) * 100
@@ -86,10 +96,25 @@ class ChestXrayDataset(Dataset):
         if "Patient Gender" in self.data.columns:
             gender_groups = self.data.groupby("Patient Gender")
             for gender, group in gender_groups:
+                # One-hot encode labels within each gender group
                 gender_labels = group["Finding Labels"].str.get_dummies(sep="|")
-                gender_counts = gender_labels.sum(axis=0)
-                gender_prevalence = (gender_counts / len(group)) * 100
 
+                # Ensure the columns are in the correct order as defined in self.all_labels
+                for label in self.all_labels:
+                    if label not in gender_labels.columns:
+                        gender_labels[label] = 0  # Add missing labels as zeros
+                gender_labels = gender_labels[self.all_labels]  # Reorder columns to match self.all_labels
+
+                # Sum the occurrences of each disease within the gender group
+                gender_counts = gender_labels.sum(axis=0)
+                print("gender labels", gender_labels)
+                print("gender counts", gender_counts)
+
+                # Calculate prevalence as a percentage
+                gender_prevalence = (gender_counts / len(group)) * 100
+                print("gender prevalence", gender_prevalence)
+
+                # Plotting
                 plt.figure(figsize=(12, 6))
                 sns.barplot(x=self.all_labels, y=gender_prevalence, palette='viridis')
                 plt.xticks(rotation=45, ha='right')
@@ -98,6 +123,7 @@ class ChestXrayDataset(Dataset):
                 plt.title(f'Class Distribution for {"Male" if gender == "M" else "Female"} Patients')
                 plt.tight_layout()
                 plt.show()
+
 
     def __len__(self):
         return len(self.data)
