@@ -6,6 +6,9 @@ from torch.utils.data import DataLoader
 from NIH_fin import FairChestXrayModel
 from NIH_model import ChestXrayModel
 from NIH_dataset import ChestXrayDataset, transform
+from tqdm import tqdm
+import time
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--use_fin", action="store_true", help="Use FIN model instead of standard ResNet model")  # ✅ Correct
@@ -22,8 +25,8 @@ train_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform, 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
 # Create test dataset (FULL dataset, NO sampling)
-test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform, subset_size=None)
-print(f"✅ Training on {len(train_dataset)} samples.")
+test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform)
+print(f"✅ Training on {len(train_dataset)} samples.") # ! does not consider subset dimension
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 
@@ -49,7 +52,10 @@ num_epochs = 5
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
-    for images, labels, identity_group in train_loader:  # ✅ Now expecting 3 values
+    start_time = time.time()
+    
+    progress_bar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}")
+    for images, labels, identity_group in progress_bar:  # ✅ Now expecting 3 values
         images, labels = images.to(device), labels.to(device)
 
         optimizer.zero_grad()
@@ -59,10 +65,11 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         total_loss += loss.item()
+        progress_bar.set_postfix({"Batch Loss": loss.item()})
     
     print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss/len(train_loader):.4f}")
 
 # Save the trained model
-model_filename = "chestxray_model_fin.pth" if args.use_fin else "chestxray_model.pth"
+model_filename = "NIH_model_fin.pth" if args.use_fin else "NIH_model.pth"
 torch.save(model.state_dict(), model_filename)
 print(f"✅ Model saved as '{model_filename}' 🎉")
