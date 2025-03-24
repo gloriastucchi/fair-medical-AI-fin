@@ -7,6 +7,10 @@ import numpy as np
 from NIH_dataset import ChestXrayDataset, transform
 from NIH_model import ChestXrayModel
 from NIH_fin import FairChestXrayModel  # Import FIN model
+import warnings
+
+
+warnings.filterwarnings("ignore")
 
 def inspect_group_data(labels, predictions, group_mask, group_name):
     # Check for NaN values in predictions
@@ -43,11 +47,11 @@ if args.use_fin:
     print("✅ Using FIN model for testing.")
     base_model = ChestXrayModel(num_classes=feature_dim)  # Feature extractor
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("chestxray_model_fin.pth"))
+    model.load_state_dict(torch.load("NIH_model_fin.pth"))
 else:
     print("✅ Using standard ResNet model for testing.")
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("chestxray_model.pth"))
+    model.load_state_dict(torch.load("NIH_model.pth"))
 
 model.eval()  # Set model to evaluation mode
 
@@ -90,6 +94,8 @@ for i in range(num_classes):
     except ValueError:
         auc_per_class.append(float("0"))  # Handle cases where a class is missing
 
+
+
 # Compute Mean AUC
 mean_auc = np.nanmean(auc_per_class)  # Ignore NaNs if any class is missing
 
@@ -99,51 +105,74 @@ binary_predictions = (all_predictions >= threshold).astype(int)
 overall_accuracy = accuracy_score(all_labels.flatten(), binary_predictions.flatten())
 
 # Compute AUC-ROC and Accuracy for Male and Female groups
+print("all groups: ", all_groups)
 male_mask = all_groups == 0
 female_mask = all_groups == 1
 
-# Inspect male group data
-nan_in_male_predictions, positive_male_samples = inspect_group_data(
-    all_labels, all_predictions, male_mask, "male"
-)
+# Compute group masks (if not already computed)
+male_mask = all_groups == 0
+female_mask = all_groups == 1
 
-# Inspect female group data
-nan_in_female_predictions, positive_female_samples = inspect_group_data(
-    all_labels, all_predictions, female_mask, "female"
-)
-# Initialize metrics
-auc_male = auc_female = accuracy_male = accuracy_female = float("nan")
+# (Optional) Print distribution of labels per class for each group, as you did:
+for cls in range(all_labels.shape[1]):
+    male_labels = all_labels[male_mask, cls]
+    female_labels = all_labels[female_mask, cls]
+    print(f"Class {cls}: Male positives = {np.sum(male_labels == 1)}, Male negatives = {np.sum(male_labels == 0)}")
+    print(f"Class {cls}: Female positives = {np.sum(female_labels == 1)}, Female negatives = {np.sum(female_labels == 0)}")
 
-# Compute metrics for male group
-if positive_male_samples > 0 and not nan_in_male_predictions:
-    try:
-        auc_male = roc_auc_score(all_labels[male_mask], all_predictions[male_mask])
-    except ValueError as e:
-        print(f"Error computing AUC-ROC for male group: {e}")
-    accuracy_male = accuracy_score(
-        all_labels[male_mask].flatten(),
-        (all_predictions[male_mask] >= 0.5).astype(int).flatten()
-    )
+# Compute AUC for male group
+auc_per_class_male = []
+for cls in range(all_labels.shape[1]):
+    male_labels = all_labels[male_mask, cls]
+    # Only compute AUC if both classes are present
+    if np.unique(male_labels).size == 2:
+        try:
+            auc = roc_auc_score(male_labels, all_predictions[male_mask, cls])
+            auc_per_class_male.append(auc)
+        except ValueError as e:
+            print(f"Error computing AUC for male group class {cls}: {e}")
+    else:
+        print(f"Skipping male group class {cls} due to imbalanced labels.")
+        
+if auc_per_class_male:
+    mean_auc_male = np.mean(auc_per_class_male)
 else:
-    print("Insufficient data to compute AUC-ROC for male group.")
+    mean_auc_male = float("nan")
 
-# Compute metrics for female group
-if positive_female_samples > 0 and not nan_in_female_predictions:
-    try:
-        auc_female = roc_auc_score(all_labels[female_mask], all_predictions[female_mask])
-    except ValueError as e:
-        print(f"Error computing AUC-ROC for female group: {e}")
-    accuracy_female = accuracy_score(
-        all_labels[female_mask].flatten(),
-        (all_predictions[female_mask] >= 0.5).astype(int).flatten()
-    )
+# Compute AUC for female group
+auc_per_class_female = []
+for cls in range(all_labels.shape[1]):
+    female_labels = all_labels[female_mask, cls]
+    # Only compute AUC if both classes are present
+    if np.unique(female_labels).size == 2:
+        try:
+            auc = roc_auc_score(female_labels, all_predictions[female_mask, cls])
+            auc_per_class_female.append(auc)
+        except ValueError as e:
+            print(f"Error computing AUC for female group class {cls}: {e}")
+    else:
+        print(f"Skipping female group class {cls} due to imbalanced labels.")
+        
+if auc_per_class_female:
+    mean_auc_female = np.mean(auc_per_class_female)
 else:
-    print("Insufficient data to compute AUC-ROC for female group.")
+    mean_auc_female = float("nan")
 
-# Print the computed metrics
-print(f"AUC-ROC (Male): {auc_male}")
+# You can then print the computed metrics:
+print(f"Mean AUC-ROC (Male): {mean_auc_male}")
+print(f"Mean AUC-ROC (Female): {mean_auc_female}")
+
+# If you still want to compute overall accuracy for each group, you can do so:
+accuracy_male = accuracy_score(
+    all_labels[male_mask].flatten(),
+    (all_predictions[male_mask] >= 0.5).astype(int).flatten()
+)
+accuracy_female = accuracy_score(
+    all_labels[female_mask].flatten(),
+    (all_predictions[female_mask] >= 0.5).astype(int).flatten()
+)
 print(f"Accuracy (Male): {accuracy_male}")
-print(f"AUC-ROC (Female): {auc_female}")
 print(f"Accuracy (Female): {accuracy_female}")
+
 
 print("✅ Testing complete! Predictions saved as 'test_predictions.npy' and 'test_labels.npy'.")
