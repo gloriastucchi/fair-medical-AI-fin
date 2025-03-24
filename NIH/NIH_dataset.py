@@ -23,7 +23,7 @@ class ChestXrayDataset(Dataset):
         # Filter dataset based on train/test split
         with open(image_list, "r") as f:
             self.image_names = set(f.read().splitlines())
-
+        
         self.data = self.data[self.data["Image Index"].isin(self.image_names)]
 
         # Apply subset sampling (only for training, not testing)
@@ -38,28 +38,34 @@ class ChestXrayDataset(Dataset):
             if label not in label_columns.columns:
                 label_columns[label] = 0  # Add missing labels as zeros
 
-        # Reorder columns to match the correct order
         label_columns = label_columns[self.all_labels]
         self.labels = label_columns.values
 
-        # Calculate per-class analytics
-        self.calculate_class_statistics()
-
-        # Plot class distributions
+        self.calculate_statistics()
         self.plot_class_distributions()
 
-    def calculate_class_statistics(self):
-        # Calculate the number of positive samples for each class
-        positive_counts = self.labels.sum(axis=0)
+    def calculate_statistics(self):
+        # Total number of samples
         total_samples = len(self.data)
+        print(f"Total number of samples: {total_samples}")
 
-        print("\n📊 Per-Class Statistics:")
+        # Total number of unique IDs
+        unique_ids = self.data['Patient ID'].nunique()
+        print(f"Total number of unique IDs: {unique_ids}")
+
+        # Gender distribution
+        if "Patient Gender" in self.data.columns:
+            male_count = (self.data["Patient Gender"] == 'M').sum()
+            female_count = (self.data["Patient Gender"] == 'F').sum()
+            print(f"Percentage of males: {(male_count / total_samples) * 100:.2f}%")
+            print(f"Percentage of females: {(female_count / total_samples) * 100:.2f}%")
+
+        # Disease prevalence
+        positive_counts = self.labels.sum(axis=0)
+        print("\nPrevalence of each disease:")
         for idx, label in enumerate(self.all_labels):
-            count = positive_counts[idx]
-            prevalence = (count / total_samples) * 100
-            print(f"  🔹 {label}:")
-            print(f"     - Positive Samples: {count}")
-            print(f"     - Prevalence: {prevalence:.2f}%\n")
+            prevalence = (positive_counts[idx] / total_samples) * 100
+            print(f"{label}: {prevalence:.2f}%")
 
     def plot_class_distributions(self):
         # Overall class distribution
@@ -105,16 +111,7 @@ class ChestXrayDataset(Dataset):
             image = self.transform(image)
 
         label = torch.tensor(self.labels[idx], dtype=torch.float32)
-
-        # Convert "M" → 0 and "F" → 1
-        if self.data.iloc[idx]["Patient Gender"] == "M":
-            identity_group = 0
-        elif self.data.iloc[idx]["Patient Gender"] == "F":
-            identity_group = 1
-        else:
-            raise ValueError(f"❌ Unexpected gender value: {self.data.iloc[idx]['Patient Gender']}")
-
-        # Convert to tensor
+        identity_group = 0 if self.data.iloc[idx]["Patient Gender"] == 'M' else 1
         identity_group = torch.tensor(identity_group, dtype=torch.long)
 
         return image, label, identity_group
@@ -124,7 +121,7 @@ transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=3),  # Convert grayscale to 3-channel RGB
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])  # Match 3-channel shape
+    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
 
 if __name__ == "__main__":
