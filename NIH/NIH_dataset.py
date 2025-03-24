@@ -108,11 +108,12 @@ class ChestXrayDataset(Dataset):
 
                 # Sum the occurrences of each disease within the gender group
                 gender_counts = gender_labels.sum(axis=0)
-                print("gender labels", gender_labels)
-                print("gender counts", gender_counts)
+                #print("gender labels", gender_labels)
+                #print("gender counts", gender_counts)
 
                 # Calculate prevalence as a percentage
                 gender_prevalence = (gender_counts / len(group)) * 100
+                print(gender)
                 print("gender prevalence", gender_prevalence)
 
                 # Plotting
@@ -148,7 +149,7 @@ transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=3),  # Convert grayscale to 3-channel RGB
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]) # ! SHOULD I REMOVE NORMALIZATIO IN ORDER TO APPLY FIN CORRECTLY?
 ])
 
 if __name__ == "__main__":
