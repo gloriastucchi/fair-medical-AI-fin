@@ -66,7 +66,7 @@ parser.add_argument('--start-epoch', default=0, type=int)
 parser.add_argument('--pretrained-weights', default='', type=str)
 
 parser.add_argument('--result_dir', default='./results', type=str)
-parser.add_argument('--data_dir', default='./results', type=str)
+parser.add_argument('--data_dir', default='/Users/gloriastucchi/Desktop/dataset', type=str)
 parser.add_argument('--model_type', default='./results', type=str)
 parser.add_argument('--task', default='cls', type=str, help='cls | md | tds')
 parser.add_argument('--image_size', default=224, type=int)
@@ -416,6 +416,12 @@ if __name__ == '__main__':
             'train_auc': train_auc,
             'test_auc': test_auc
             }
+
+            # Save the model checkpoint
+            model_save_path = os.path.join(args.result_dir, 'best_model.pt')
+            torch.save(state, model_save_path)
+            logger.log(f'Saved best model to {model_save_path}')
+
             
         print(f'---- best AUC {best_auc:.4f} at epoch {best_ep}')
         logger.log(f'---- best AUC {best_auc:.4f} at epoch {best_ep}')

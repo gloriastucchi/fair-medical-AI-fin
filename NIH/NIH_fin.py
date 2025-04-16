@@ -14,7 +14,6 @@ class FairIdentityNormalization(nn.Module):
         return (x - mean) / (std + 1e-5)  # Avoid division by zero
 
 
-# Example usage in a model
 class FairChestXrayModel(nn.Module):
     def __init__(self, base_model, feature_dim, num_groups):
         super(FairChestXrayModel, self).__init__()

@@ -3,12 +3,15 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
+from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
 from PIL import Image
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
+
 
 class ChestXrayDataset(Dataset):
-    def __init__(self, csv_file, image_folder, image_list, transform=None, subset_size=None):
+    def __init__(self, csv_file, image_folder, image_list, transform=None, subset_size=None, stratify=False):
         self.data = pd.read_csv(csv_file)
         self.image_folder = image_folder
         self.transform = transform
@@ -20,23 +23,23 @@ class ChestXrayDataset(Dataset):
             'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax', 'No Finding'
         ]
 
-        print("all labels", self.all_labels)
+        # print("all labels", self.all_labels)
 
         # Filter dataset based on train/test split
         with open(image_list, "r") as f:
             self.image_names = set(f.read().splitlines())
         
         self.data = self.data[self.data["Image Index"].isin(self.image_names)]
-        print("data", self.data)
+        #print("data", self.data)
 
         # Apply subset sampling (only for training, not testing)
         if subset_size and len(self.data) > subset_size:
             self.data = self.data.sample(n=subset_size, random_state=42)
 
         # One-hot encode labels and ensure 15 columns
-        print("onehot encoding", self.data["Finding Labels"])
+        #print("onehot encoding", self.data["Finding Labels"])
         label_columns = self.data["Finding Labels"].str.get_dummies(sep="|")
-        print("label columns after get dummies", label_columns)
+        #print("label columns after get dummies", label_columns)
 
         # Ensure all 15 labels exist, even if some are missing from the subset
         for label in self.all_labels:
@@ -44,10 +47,26 @@ class ChestXrayDataset(Dataset):
                 label_columns[label] = 0  # Add missing labels as zeros
 
         label_columns = label_columns[self.all_labels]
-        print("label columns", label_columns)
+        #print("label columns", label_columns)
         self.labels = label_columns.values
-        print("labels", self.labels)
-        print("self data", self.data)
+        #print("labels", self.labels)
+        #print("self data", self.data)
+                # Apply multilabel stratified sampling if requested
+        if subset_size and len(self.data) > subset_size:
+            if stratify:
+                print("📊 Using Multilabel Stratified Sampling")
+                msss = MultilabelStratifiedShuffleSplit(n_splits=1, train_size=subset_size, random_state=42)
+                indices, _ = next(msss.split(np.zeros(len(self.labels)), self.labels))
+                self.data = self.data.iloc[indices].reset_index(drop=True)
+                self.labels = self.labels[indices]
+            else:
+                print("🎲 Using Random Sampling")
+                self.data = self.data.sample(n=subset_size, random_state=42).reset_index(drop=True)
+                self.labels = self.labels[:subset_size]
+        # Save paths and groups
+        self.image_paths = self.data["Image Index"].values
+        self.groups = self.data["Patient Gender"].apply(lambda x: 0 if x == "M" else 1).values.astype(np.int64)
+
         self.calculate_statistics()
         self.plot_class_distributions()
 
