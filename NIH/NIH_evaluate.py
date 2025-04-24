@@ -36,9 +36,9 @@ args = parser.parse_args()
 #IMAGE_FOLDER = "/work3/s232437/images_full/"
 #TRAIN_LIST = "/Users/gloriastucchi/Desktop/NIH/train_val_list.txt"
 #TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"  # Corrected test file
-CSV_FILE = "/zhome/4b/b/202548/NIH/Data_Entry_2017_v2020_.csv"
+CSV_FILE = "/work3/s232437/NIH/Data_Entry_2017_v2020_.csv"
 IMAGE_FOLDER = "/work3/s232437/images_full/images/"
-TEST_LIST = "/zhome/4b/b/202548/NIH/test_list.txt"
+TEST_LIST = "/work3/s232437/NIH/test_list.txt"
 
 # Load test dataset
 test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform)
@@ -54,11 +54,11 @@ if args.use_fin:
     print("✅ Using FIN model for testing.")
     base_model = ChestXrayModel(num_classes=feature_dim)  # Feature extractor
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("/zhome/4b/b/202548/fair-medical-AI-fin/NIH_fulldata_model_fin_bce_loss0.1260.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH_fulldata_model_fin_bce_loss0.1260.pth"))
 else:
     print("✅ Using standard ResNet model for testing.")
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("/zhome/4b/b/202548/fair-medical-AI-fin/NIH_fulldata_model_nofin_bce_loss0.1246.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH_fulldata_model_nofin_bce_loss0.1246.pth"))
 
 model.eval()  # Set model to evaluation mode
 
