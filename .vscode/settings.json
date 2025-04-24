@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/images_full": true
+  },
+  "search.exclude": {
+    "**/images_full": true
+  },
+  "git.ignoredRepositories": [
+    "**/images_full"
+  ]
+}

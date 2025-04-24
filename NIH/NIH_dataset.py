@@ -173,9 +173,9 @@ transform = transforms.Compose([
 
 if __name__ == "__main__":
     dataset = ChestXrayDataset(
-        csv_file="/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv",
-        image_folder="/Users/gloriastucchi/Desktop/NIH/images/",
-        image_list="/Users/gloriastucchi/Desktop/NIH/train_val_list.txt",
+        csv_file="/work3/s232437/fair-medical-AI-fin/NIH/Data_Entry_2017_v2020_.csv",
+        image_folder="/work3/s232437/images_full/",
+        image_list="/work3/s232437/fair-medical-AI-fin/NIH/train_val_list.txt",
         transform=transform
     )
     print(f"Dataset size: {len(dataset)}")

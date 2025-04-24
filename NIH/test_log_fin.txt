@@ -1,0 +1,489 @@
+Total number of samples: 25596
+Total number of unique IDs: 2797
+Percentage of males: 58.14%
+Percentage of females: 41.86%
+self labels [[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]]
+
+Total number of positive counts: [3279 1069 1815  925 4658 1093  435   86 6112 1748 1623 1143  555 2665
+ 9861]
+
+Prevalence of each disease:
+Atelectasis: 12.81%
+Cardiomegaly: 4.18%
+Consolidation: 7.09%
+Edema: 3.61%
+Effusion: 18.20%
+Emphysema: 4.27%
+Fibrosis: 1.70%
+Hernia: 0.34%
+Infiltration: 23.88%
+Mass: 6.83%
+Nodule: 6.34%
+Pleural_Thickening: 4.47%
+Pneumonia: 2.17%
+Pneumothorax: 10.41%
+No Finding: 38.53%
+F
+gender prevalence Atelectasis           12.721673
+Cardiomegaly           4.928131
+Consolidation          7.242860
+Edema                  3.770767
+Effusion              17.929811
+Emphysema              3.556095
+Fibrosis               1.717379
+Hernia                 0.420011
+Infiltration          23.100616
+Mass                   6.365503
+Nodule                 6.458839
+Pleural_Thickening     4.321449
+Pneumonia              2.062722
+Pneumothorax          11.489640
+No Finding            38.743700
+dtype: float64
+M
+gender prevalence Atelectasis           12.874614
+Cardiomegaly           3.635264
+Consolidation          6.981588
+Edema                  3.500874
+Effusion              18.391345
+Emphysema              4.784303
+Fibrosis               1.686601
+Hernia                 0.275501
+Infiltration          24.438920
+Mass                   7.163016
+Nodule                 6.255880
+Pleural_Thickening     4.569278
+Pneumonia              2.244322
+Pneumothorax           9.635802
+No Finding            38.368499
+dtype: float64
+✅ Using FIN model for testing.
+
+📊 Per-Class AUC-ROC Scores:
+
+Class                   Overall     Male   Female     Δ(M)     Δ(F)
+------------------------------------------------------------
+Atelectasis              0.7329   0.7410   0.7219   0.0080   0.0111
+Cardiomegaly             0.8417   0.8369   0.8457   0.0048   0.0040
+Consolidation            0.7087   0.7092   0.7085   0.0005   0.0001
+Edema                    0.8011   0.7961   0.8074   0.0051   0.0063
+Effusion                 0.7998   0.8110   0.7834   0.0113   0.0163
+Emphysema                0.8538   0.8525   0.8568   0.0013   0.0029
+Fibrosis                 0.7837   0.8084   0.7501   0.0247   0.0337
+Hernia                   0.8039   0.7927   0.8113   0.0111   0.0074
+Infiltration             0.6470   0.6496   0.6427   0.0027   0.0042
+Mass                     0.7584   0.7670   0.7446   0.0086   0.0139
+Nodule                   0.6951   0.6937   0.6969   0.0014   0.0018
+Pleural_Thickening       0.7194   0.7135   0.7271   0.0058   0.0078
+Pneumonia                0.6807   0.6955   0.6585   0.0148   0.0222
+Pneumothorax             0.8021   0.7910   0.8139   0.0111   0.0118
+No Finding               0.6696   0.6766   0.6600   0.0070   0.0096
+
+📏 Correct Equity-Scaled AUC per class (based on group disparity):
+
+Class                       AUC     ES-AUC    Disparity
+--------------------------------------------------------
+Atelectasis              0.7329     0.7192       0.0191
+Cardiomegaly             0.8417     0.8344       0.0088
+Consolidation            0.7087     0.7082       0.0006
+Edema                    0.8011     0.7922       0.0113
+Effusion                 0.7998     0.7783       0.0276
+Emphysema                0.8538     0.8502       0.0043
+Fibrosis                 0.7837     0.7405       0.0583
+Hernia                   0.8039     0.7892       0.0186
+Infiltration             0.6470     0.6425       0.0069
+Mass                     0.7584     0.7418       0.0225
+Nodule                   0.6951     0.6929       0.0032
+Pleural_Thickening       0.7194     0.7097       0.0136
+Pneumonia                0.6807     0.6564       0.0371
+Pneumothorax             0.8021     0.7842       0.0229
+No Finding               0.6696     0.6587       0.0166
+
+✅ Mean ES-AUC (per class): 0.7399
+🔍 Final Metrics:
+Mean AUC-ROC (Overall): 0.7532
+Mean AUC-ROC (Male):    0.7557
+Mean AUC-ROC (Female):  0.7486
+Equity-Scaled AUC:      0.7399
+Accuracy (Male):        0.9031
+Accuracy (Female):      0.9017
+
+📉 Confusion Matrices per Class (threshold=0.5):
+Each matrix is formatted as:
+[[TN FP]
+ [FN TP]]
+
+🔬 Atelectasis:
+   [[TN FP]
+    [FN TP]]
+[[21908   409]
+ [ 2954   325]]
+
+🔬 Cardiomegaly:
+   [[TN FP]
+    [FN TP]]
+[[24073   454]
+ [  745   324]]
+
+🔬 Consolidation:
+   [[TN FP]
+    [FN TP]]
+[[23777     4]
+ [ 1814     1]]
+
+🔬 Edema:
+   [[TN FP]
+    [FN TP]]
+[[24459   212]
+ [  858    67]]
+
+🔬 Effusion:
+   [[TN FP]
+    [FN TP]]
+[[18818  2120]
+ [ 2600  2058]]
+
+🔬 Emphysema:
+   [[TN FP]
+    [FN TP]]
+[[24247   256]
+ [  853   240]]
+
+🔬 Fibrosis:
+   [[TN FP]
+    [FN TP]]
+[[25121    40]
+ [  428     7]]
+
+🔬 Hernia:
+   [[TN FP]
+    [FN TP]]
+[[25510     0]
+ [   84     2]]
+
+🔬 Infiltration:
+   [[TN FP]
+    [FN TP]]
+[[17381  2103]
+ [ 4730  1382]]
+
+🔬 Mass:
+   [[TN FP]
+    [FN TP]]
+[[23334   514]
+ [ 1414   334]]
+
+🔬 Nodule:
+   [[TN FP]
+    [FN TP]]
+[[23885    88]
+ [ 1564    59]]
+
+🔬 Pleural_Thickening:
+   [[TN FP]
+    [FN TP]]
+[[24399    54]
+ [ 1125    18]]
+
+🔬 Pneumonia:
+   [[TN FP]
+    [FN TP]]
+[[25041     0]
+ [  555     0]]
+
+🔬 Pneumothorax:
+   [[TN FP]
+    [FN TP]]
+[[22496   435]
+ [ 2272   393]]
+
+🔬 No Finding:
+   [[TN FP]
+    [FN TP]]
+[[12934  2801]
+ [ 5940  3921]]
+
+
+📐 Precision, Recall, F1-score per Classe (threshold = 0.5):
+
+Class                   Support  Precision   Recall   F1-score
+------------------------------------------------------------
+Atelectasis                3279     0.4428   0.0991     0.1620
+Cardiomegaly               1069     0.4165   0.3031     0.3508
+Consolidation              1815     0.2000   0.0006     0.0011
+Edema                       925     0.2401   0.0724     0.1113
+Effusion                   4658     0.4926   0.4418     0.4658
+Emphysema                  1093     0.4839   0.2196     0.3021
+Fibrosis                    435     0.1489   0.0161     0.0290
+Hernia                       86     1.0000   0.0233     0.0455
+Infiltration               6112     0.3966   0.2261     0.2880
+Mass                       1748     0.3939   0.1911     0.2573
+Nodule                     1623     0.4014   0.0364     0.0667
+Pleural_Thickening         1143     0.2500   0.0157     0.0296
+Pneumonia                   555     0.0000   0.0000     0.0000
+Pneumothorax               2665     0.4746   0.1475     0.2250
+No Finding                 9861     0.5833   0.3976     0.4729
+
+📊 Macro & Micro averages:
+Macro Precision: 0.3950
+Macro Recall:    0.1460
+Macro F1-score:  0.1871
+Micro Precision: 0.4904
+Micro Recall:    0.2463
+Micro F1-score:  0.3279
+
+🧠 Optimal Thresholds per Class (maximizing F1-score):
+
+Class                   Best Threshold   Best F1-score
+-------------------------------------------------------
+Atelectasis                       0.13          0.3566
+Cardiomegaly                      0.29          0.3768
+Consolidation                     0.03          0.2201
+Edema                             0.16          0.2117
+Effusion                          0.31          0.4943
+Emphysema                         0.16          0.3765
+Fibrosis                          0.11          0.1469
+Hernia                            0.04          0.2323
+Infiltration                      0.21          0.4311
+Mass                              0.17          0.3186
+Nodule                            0.11          0.2210
+Pleural_Thickening                0.06          0.1762
+Pneumonia                         0.03          0.0833
+Pneumothorax                      0.08          0.4061
+No Finding                        0.16          0.5808
+
+🎯 Final Evaluation with Optimized Thresholds:
+
+Class                   Support  Precision   Recall   F1-score
+------------------------------------------------------------
+
+📉 Confusion Matrices per Class (threshold personalized):
+Each matrix is formatted as:
+[[TN FP]
+ [FN TP]]
+
+🔬 Atelectasis:
+   [[TN FP]
+    [FN TP]]
+[[18342  3975]
+ [ 1705  1574]]
+
+🔬 Cardiomegaly:
+   [[TN FP]
+    [FN TP]]
+[[23765   762]
+ [  644   425]]
+
+🔬 Consolidation:
+   [[TN FP]
+    [FN TP]]
+[[18610  5171]
+ [  951   864]]
+
+🔬 Edema:
+   [[TN FP]
+    [FN TP]]
+[[23450  1221]
+ [  671   254]]
+
+🔬 Effusion:
+   [[TN FP]
+    [FN TP]]
+[[17012  3926]
+ [ 1840  2818]]
+
+🔬 Emphysema:
+   [[TN FP]
+    [FN TP]]
+[[23759   744]
+ [  667   426]]
+
+🔬 Fibrosis:
+   [[TN FP]
+    [FN TP]]
+[[24486   675]
+ [  347    88]]
+
+🔬 Hernia:
+   [[TN FP]
+    [FN TP]]
+[[25459    51]
+ [   68    18]]
+
+🔬 Infiltration:
+   [[TN FP]
+    [FN TP]]
+[[10160  9324]
+ [ 1871  4241]]
+
+🔬 Mass:
+   [[TN FP]
+    [FN TP]]
+[[22213  1635]
+ [ 1107   641]]
+
+🔬 Nodule:
+   [[TN FP]
+    [FN TP]]
+[[21209  2764]
+ [ 1078   545]]
+
+🔬 Pleural_Thickening:
+   [[TN FP]
+    [FN TP]]
+[[21848  2605]
+ [  781   362]]
+
+🔬 Pneumonia:
+   [[TN FP]
+    [FN TP]]
+[[22511  2530]
+ [  421   134]]
+
+🔬 Pneumothorax:
+   [[TN FP]
+    [FN TP]]
+[[20242  2689]
+ [ 1301  1364]]
+
+🔬 No Finding:
+   [[TN FP]
+    [FN TP]]
+[[ 5555 10180]
+ [ 1659  8202]]
+
+Atelectasis                3279     0.2837   0.4800     0.3566
+Cardiomegaly               1069     0.3580   0.3976     0.3768
+Consolidation              1815     0.1432   0.4760     0.2201
+Edema                       925     0.1722   0.2746     0.2117
+Effusion                   4658     0.4179   0.6050     0.4943
+Emphysema                  1093     0.3641   0.3898     0.3765
+Fibrosis                    435     0.1153   0.2023     0.1469
+Hernia                       86     0.2609   0.2093     0.2323
+Infiltration               6112     0.3126   0.6939     0.4311
+Mass                       1748     0.2816   0.3667     0.3186
+Nodule                     1623     0.1647   0.3358     0.2210
+Pleural_Thickening         1143     0.1220   0.3167     0.1762
+Pneumonia                   555     0.0503   0.2414     0.0833
+Pneumothorax               2665     0.3365   0.5118     0.4061
+No Finding                 9861     0.4462   0.8318     0.5808
+🔬 Atelectasis (Male):
+[[12757   209]
+ [ 1736   180]]
+🔬 Atelectasis (Female):
+[[9151  200]
+ [1218  145]]
+
+🔬 Cardiomegaly (Male):
+[[14095   246]
+ [  383   158]]
+🔬 Cardiomegaly (Female):
+[[9978  208]
+ [ 362  166]]
+
+🔬 Consolidation (Male):
+[[13842     1]
+ [ 1038     1]]
+🔬 Consolidation (Female):
+[[9935    3]
+ [ 776    0]]
+
+🔬 Edema (Male):
+[[14273    88]
+ [  492    29]]
+🔬 Edema (Female):
+[[10186   124]
+ [  366    38]]
+
+🔬 Effusion (Male):
+[[10900  1245]
+ [ 1483  1254]]
+🔬 Effusion (Female):
+[[7918  875]
+ [1117  804]]
+
+🔬 Emphysema (Male):
+[[14007   163]
+ [  539   173]]
+🔬 Emphysema (Female):
+[[10240    93]
+ [  314    67]]
+
+🔬 Fibrosis (Male):
+[[14602    29]
+ [  246     5]]
+🔬 Fibrosis (Female):
+[[10519    11]
+ [  182     2]]
+
+🔬 Hernia (Male):
+[[14841     0]
+ [   39     2]]
+🔬 Hernia (Female):
+[[10669     0]
+ [   45     0]]
+
+🔬 Infiltration (Male):
+[[9956 1289]
+ [2787  850]]
+🔬 Infiltration (Female):
+[[7425  814]
+ [1943  532]]
+
+🔬 Mass (Male):
+[[13476   340]
+ [  860   206]]
+🔬 Mass (Female):
+[[9858  174]
+ [ 554  128]]
+
+🔬 Nodule (Male):
+[[13905    46]
+ [  903    28]]
+🔬 Nodule (Female):
+[[9980   42]
+ [ 661   31]]
+
+🔬 Pleural_Thickening (Male):
+[[14165    37]
+ [  667    13]]
+🔬 Pleural_Thickening (Female):
+[[10234    17]
+ [  458     5]]
+
+🔬 Pneumonia (Male):
+[[14548     0]
+ [  334     0]]
+🔬 Pneumonia (Female):
+[[10493     0]
+ [  221     0]]
+
+🔬 Pneumothorax (Male):
+[[13305   143]
+ [ 1292   142]]
+🔬 Pneumothorax (Female):
+[[9191  292]
+ [ 980  251]]
+
+🔬 No Finding (Male):
+[[7529 1643]
+ [3356 2354]]
+🔬 No Finding (Female):
+[[5405 1158]
+ [2584 1567]]
+
+
+📊 Optimized Macro & Micro Averages:
+Macro Precision: 0.2553
+Macro Recall:    0.4222
+Macro F1-score:  0.3088
+Micro Precision: 0.3127
+Micro Recall:    0.5923
+Micro F1-score:  0.4093
+✅ Testing complete! Predictions saved as 'test_predictions.npy' and 'test_labels.npy'.

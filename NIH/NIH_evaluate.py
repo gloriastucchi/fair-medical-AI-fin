@@ -36,9 +36,9 @@ args = parser.parse_args()
 #IMAGE_FOLDER = "/work3/s232437/images_full/"
 #TRAIN_LIST = "/Users/gloriastucchi/Desktop/NIH/train_val_list.txt"
 #TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"  # Corrected test file
-CSV_FILE = "/work3/s232437/NIH/Data_Entry_2017_v2020_.csv"
+CSV_FILE = "/work3/s232437/fair-medical-AI-fin/NIH/Data_Entry_2017_v2020_.csv"
 IMAGE_FOLDER = "/work3/s232437/images_full/images/"
-TEST_LIST = "/work3/s232437/NIH/test_list.txt"
+TEST_LIST = "/work3/s232437/fair-medical-AI-fin/NIH/test_list.txt"
 
 # Load test dataset
 test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform)

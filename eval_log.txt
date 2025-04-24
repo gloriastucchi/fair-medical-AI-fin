@@ -1,0 +1,86 @@
+Total number of samples: 25596
+Total number of unique IDs: 2797
+Percentage of males: 58.14%
+Percentage of females: 41.86%
+self labels [[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]]
+
+Total number of positive counts: [3279 1069 1815  925 4658 1093  435   86 6112 1748 1623 1143  555 2665
+ 9861]
+
+Prevalence of each disease:
+Atelectasis: 12.81%
+Cardiomegaly: 4.18%
+Consolidation: 7.09%
+Edema: 3.61%
+Effusion: 18.20%
+Emphysema: 4.27%
+Fibrosis: 1.70%
+Hernia: 0.34%
+Infiltration: 23.88%
+Mass: 6.83%
+Nodule: 6.34%
+Pleural_Thickening: 4.47%
+Pneumonia: 2.17%
+Pneumothorax: 10.41%
+No Finding: 38.53%
+F
+gender prevalence Atelectasis           12.721673
+Cardiomegaly           4.928131
+Consolidation          7.242860
+Edema                  3.770767
+Effusion              17.929811
+Emphysema              3.556095
+Fibrosis               1.717379
+Hernia                 0.420011
+Infiltration          23.100616
+Mass                   6.365503
+Nodule                 6.458839
+Pleural_Thickening     4.321449
+Pneumonia              2.062722
+Pneumothorax          11.489640
+No Finding            38.743700
+dtype: float64
+M
+gender prevalence Atelectasis           12.874614
+Cardiomegaly           3.635264
+Consolidation          6.981588
+Edema                  3.500874
+Effusion              18.391345
+Emphysema              4.784303
+Fibrosis               1.686601
+Hernia                 0.275501
+Infiltration          24.438920
+Mass                   7.163016
+Nodule                 6.255880
+Pleural_Thickening     4.569278
+Pneumonia              2.244322
+Pneumothorax           9.635802
+No Finding            38.368499
+dtype: float64
+✅ Using standard ResNet model for testing.
+Traceback (most recent call last):
+  File "/work3/s232437/fair-medical-AI-fin/NIH/NIH_evaluate.py", line 75, in <module>
+    for batch in test_loader:
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 633, in __next__
+    data = self._next_data()
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1328, in _next_data
+    idx, data = self._get_data()
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1294, in _get_data
+    success, data = self._try_get_data()
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1132, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/multiprocessing/queues.py", line 122, in get
+    return _ForkingPickler.loads(res)
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 309, in rebuild_storage_fd
+    storage = storage_from_cache(cls, fd_id(fd))
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 300, in storage_from_cache
+    storage_ref = shared_cache.get(key)
+  File "/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torch/multiprocessing/reductions.py", line 66, in get
+    with self.lock:
+KeyboardInterrupt
