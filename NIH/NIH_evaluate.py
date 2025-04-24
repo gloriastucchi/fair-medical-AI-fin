@@ -29,13 +29,20 @@ parser.add_argument("--use_fin", action="store_true", help="Use FIN model for ev
 args = parser.parse_args()
 
 # Define paths
-CSV_FILE = "/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv"
-IMAGE_FOLDER = "/Users/gloriastucchi/Desktop/NIH/images/"
-TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"
+#CSV_FILE = "/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv"
+#no hpc
+#IMAGE_FOLDER = "/Users/gloriastucchi/Desktop/NIH/images/"
+#hpc
+#IMAGE_FOLDER = "/work3/s232437/images_full/"
+#TRAIN_LIST = "/Users/gloriastucchi/Desktop/NIH/train_val_list.txt"
+#TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"  # Corrected test file
+CSV_FILE = "/zhome/4b/b/202548/NIH/Data_Entry_2017_v2020_.csv"
+IMAGE_FOLDER = "/work3/s232437/images_full/images/"
+TEST_LIST = "/zhome/4b/b/202548/NIH/test_list.txt"
 
 # Load test dataset
-test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform, subset_size=1000)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform)
+test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers = 4)
 
 # Choose Model Based on Argument
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -47,11 +54,11 @@ if args.use_fin:
     print("✅ Using FIN model for testing.")
     base_model = ChestXrayModel(num_classes=feature_dim)  # Feature extractor
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("/Users/gloriastucchi/Desktop/tesi-magi/NIH_model_fin_focal_loss0.0274.pth"))
+    model.load_state_dict(torch.load("/zhome/4b/b/202548/fair-medical-AI-fin/NIH_fulldata_model_fin_bce_loss0.1260.pth"))
 else:
     print("✅ Using standard ResNet model for testing.")
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("/Users/gloriastucchi/Desktop/tesi-magi/NIH_model_nofin_bce_loss0.0564.pth"))
+    model.load_state_dict(torch.load("/zhome/4b/b/202548/fair-medical-AI-fin/NIH_fulldata_model_nofin_bce_loss0.1246.pth"))
 
 model.eval()  # Set model to evaluation mode
 
@@ -378,6 +385,26 @@ for i in range(num_classes):
 for i in range(num_classes):
     name = class_names[i] if i < len(class_names) else f"Class {i}"
     print(f"{name:<22} {support_opt[i]:8d} {precision_opt[i]:10.4f} {recall_opt[i]:8.4f} {f1_opt[i]:10.4f}")
+
+for i in range(num_classes):
+    class_name = class_names[i]
+    y_true = all_labels[:, i]
+    y_pred = (all_predictions[:, i] >= 0.5).astype(int)
+
+    y_true_male = y_true[male_mask]
+    y_pred_male = y_pred[male_mask]
+    y_true_female = y_true[female_mask]
+    y_pred_female = y_pred[female_mask]
+
+    if len(np.unique(y_true_male)) < 2 or len(np.unique(y_true_female)) < 2:
+        print(f"⚠️ Skipping class '{class_name}' for gender-wise confusion matrix due to label imbalance.")
+        continue
+
+    cm_male = confusion_matrix(y_true_male, y_pred_male)
+    cm_female = confusion_matrix(y_true_female, y_pred_female)
+
+    print(f"🔬 {class_name} (Male):\n{cm_male}")
+    print(f"🔬 {class_name} (Female):\n{cm_female}\n")
 
 print("\n📊 Optimized Macro & Micro Averages:")
 print(f"Macro Precision: {precision_macro_opt:.4f}")

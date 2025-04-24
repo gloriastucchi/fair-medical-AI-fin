@@ -42,20 +42,24 @@ parser.add_argument("--use_fin", action="store_true", help="Use FIN model instea
 args = parser.parse_args()
 
 # Define paths
-CSV_FILE = "/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv"
+#CSV_FILE = "/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv"
 #no hpc
 #IMAGE_FOLDER = "/Users/gloriastucchi/Desktop/NIH/images/"
 #hpc
-IMAGE_FOLDER = "/work3/s232437/images_full/"
-TRAIN_LIST = "/Users/gloriastucchi/Desktop/NIH/train_val_list.txt"
-TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"  # Corrected test file
+#IMAGE_FOLDER = "/work3/s232437/images_full/"
+#TRAIN_LIST = "/Users/gloriastucchi/Desktop/NIH/train_val_list.txt"
+#TEST_LIST = "/Users/gloriastucchi/Desktop/NIH/test_list.txt"  # Corrected test file
+CSV_FILE = "/zhome/4b/b/202548/NIH/Data_Entry_2017_v2020_.csv"
+IMAGE_FOLDER = "/work3/s232437/images_full/images/"
+TRAIN_LIST = "/zhome/4b/b/202548/NIH/train_val_list.txt"
+TEST_LIST = "/zhome/4b/b/202548/NIH/test_list.txt"
 
 # Create training dataset (LIMITED to 20.000 samples)
 train_dataset = ChestXrayDataset(
     CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform,
-    subset_size=5000, stratify=True
+    subset_size=None, stratify=True
 )
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, num_workers=4)
 print(f"✅ Training on {len(train_loader.dataset)} samples.")  # inside ChestXrayDataset
  # ! does not consider subset dimension
 full_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform)
