@@ -1,0 +1,131 @@
+/work3/s232437/fair-medical-AI-fin/NIH/NIH_dataset.py:106: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=self.all_labels, y=prevalence, palette='viridis')
+/work3/s232437/fair-medical-AI-fin/NIH/NIH_dataset.py:140: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=self.all_labels, y=gender_prevalence, palette='viridis')
+/work3/s232437/fair-medical-AI-fin/NIH/NIH_dataset.py:140: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=self.all_labels, y=gender_prevalence, palette='viridis')
+/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/zhome/4b/b/202548/miniconda3/envs/rai_fairness/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Total number of samples: 25596
+Total number of unique IDs: 2797
+Percentage of males: 58.14%
+Percentage of females: 41.86%
+self labels [[0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ [0 0 0 ... 0 0 0]
+ ...
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]
+ [0 0 0 ... 0 0 1]]
+
+Total number of positive counts: [3279 1069 1815  925 4658 1093  435   86 6112 1748 1623 1143  555 2665
+ 9861]
+
+Prevalence of each disease:
+Atelectasis: 12.81%
+Cardiomegaly: 4.18%
+Consolidation: 7.09%
+Edema: 3.61%
+Effusion: 18.20%
+Emphysema: 4.27%
+Fibrosis: 1.70%
+Hernia: 0.34%
+Infiltration: 23.88%
+Mass: 6.83%
+Nodule: 6.34%
+Pleural_Thickening: 4.47%
+Pneumonia: 2.17%
+Pneumothorax: 10.41%
+No Finding: 38.53%
+F
+gender prevalence Atelectasis           12.721673
+Cardiomegaly           4.928131
+Consolidation          7.242860
+Edema                  3.770767
+Effusion              17.929811
+Emphysema              3.556095
+Fibrosis               1.717379
+Hernia                 0.420011
+Infiltration          23.100616
+Mass                   6.365503
+Nodule                 6.458839
+Pleural_Thickening     4.321449
+Pneumonia              2.062722
+Pneumothorax          11.489640
+No Finding            38.743700
+dtype: float64
+M
+gender prevalence Atelectasis           12.874614
+Cardiomegaly           3.635264
+Consolidation          6.981588
+Edema                  3.500874
+Effusion              18.391345
+Emphysema              4.784303
+Fibrosis               1.686601
+Hernia                 0.275501
+Infiltration          24.438920
+Mass                   7.163016
+Nodule                 6.255880
+Pleural_Thickening     4.569278
+Pneumonia              2.244322
+Pneumothorax           9.635802
+No Finding            38.368499
+dtype: float64
+
+📋 Summary Table (Class x Gender):
+                      Class   TP    TN   FP   FN  Precision   Recall  F1-score      AUC  Prevalence
+         Atelectasis (Male) 1034 10305 2661  882   0.279838 0.539666  0.368562 0.747496    0.128746
+       Atelectasis (Female)  694  7549 1802  669   0.278045 0.509171  0.359679 0.720122    0.127217
+        Cardiomegaly (Male)  227 13816  525  314   0.301862 0.419593  0.351121 0.842096    0.036353
+      Cardiomegaly (Female)  243  9720  466  285   0.342736 0.460227  0.392886 0.858452    0.049281
+       Consolidation (Male)  571 10136 3707  468   0.133474 0.549567  0.214783 0.708034    0.069816
+     Consolidation (Female)  419  7362 2576  357   0.139900 0.539948  0.222222 0.712966    0.072429
+               Edema (Male)  131 13872  489  390   0.211290 0.251440  0.229623 0.812014    0.035009
+             Edema (Female)  114  9816  494  290   0.187500 0.282178  0.225296 0.819269    0.037708
+            Effusion (Male) 1851  9617 2528  886   0.422699 0.676288  0.520236 0.808453    0.183913
+          Effusion (Female) 1258  6668 2125  663   0.371859 0.654867  0.474359 0.783757    0.179298
+           Emphysema (Male)  298 13757  413  414   0.419128 0.418539  0.418833 0.856362    0.047843
+         Emphysema (Female)  122 10118  215  259   0.362018 0.320210  0.339833 0.845356    0.035561
+            Fibrosis (Male)   61 14316  315  190   0.162234 0.243028  0.194577 0.811795    0.016866
+          Fibrosis (Female)   27 10393  137  157   0.164634 0.146739  0.155172 0.763176    0.017174
+              Hernia (Male)    6 14813   28   35   0.176471 0.146341  0.160000 0.819858    0.002755
+            Hernia (Female)   13 10637   32   32   0.288889 0.288889  0.288889 0.855832    0.004200
+        Infiltration (Male) 2535  6266 4979 1102   0.337370 0.697003  0.454668 0.672494    0.244389
+      Infiltration (Female) 1660  4692 3547  815   0.318802 0.670707  0.432179 0.660973    0.231006
+                Mass (Male)  438 12741 1075  628   0.289491 0.410882  0.339667 0.785952    0.071630
+              Mass (Female)  253  9417  615  429   0.291475 0.370968  0.326452 0.761209    0.063655
+              Nodule (Male)  260 12787 1164  671   0.182584 0.279270  0.220807 0.688388    0.062559
+            Nodule (Female)  184  9446  576  508   0.242105 0.265896  0.253444 0.718732    0.064588
+  Pleural_Thickening (Male)  184 13143 1059  496   0.148029 0.270588  0.191368 0.734459    0.045693
+Pleural_Thickening (Female)  139  9590  661  324   0.173750 0.300216  0.220111 0.763137    0.043214
+           Pneumonia (Male)   37 14146  402  297   0.084282 0.110778  0.095731 0.696498    0.022443
+         Pneumonia (Female)   22 10206  287  199   0.071197 0.099548  0.083019 0.657692    0.020627
+        Pneumothorax (Male)  602 12330 1118  832   0.350000 0.419805  0.381737 0.796235    0.096358
+      Pneumothorax (Female)  673  8192 1291  558   0.342668 0.546710  0.421283 0.806630    0.114896
+          No Finding (Male) 3983  5379 3793 1727   0.512217 0.697548  0.590687 0.702920    0.383685
+        No Finding (Female) 2911  3742 2821 1240   0.507851 0.701277  0.589092 0.694557    0.387437
+
+📊 Macro & Micro Averages:
+Macro Precision: 0.2705
+Macro Recall:    0.4116
+Macro F1-score:  0.3189
+Micro Precision: 0.3333
+Micro Recall:    0.5652
+Micro F1-score:  0.4193
+
+🎯 Accuracy per Gender (with optimized thresholds):
+Male Accuracy:   0.8495
+Female Accuracy: 0.8480
+
+✅ Evaluation complete!
