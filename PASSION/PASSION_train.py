@@ -7,6 +7,7 @@ from PASSION_dataset import PassionDataset
 import argparse
 from tqdm import tqdm
 import os
+import torchvision.transforms as T
 
 # --- Argument parser ---
 parser = argparse.ArgumentParser()
@@ -23,9 +24,22 @@ args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# --- Data augmentation ---
+def get_default_transforms():
+    return T.Compose([
+        T.Resize((256, 256)),
+        T.RandomCrop(224),
+        T.RandomHorizontalFlip(),
+        T.RandomVerticalFlip(),
+        T.RandomRotation(90),
+        T.ToTensor(),
+        T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+
 # --- Load datasets ---
-train_dataset = PassionDataset(args.csv_path, args.img_dir, task=args.task, subject_list=args.train_subjects)
-val_dataset = PassionDataset(args.csv_path, args.img_dir, task=args.task, subject_list=args.val_subjects)
+transform = get_default_transforms()
+train_dataset = PassionDataset(args.csv_path, args.img_dir, task=args.task, subject_list=args.train_subjects, transform=transform)
+val_dataset = PassionDataset(args.csv_path, args.img_dir, task=args.task, subject_list=args.val_subjects, transform=transform)
 
 train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size)

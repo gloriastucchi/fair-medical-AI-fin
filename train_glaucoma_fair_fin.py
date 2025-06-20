@@ -35,9 +35,9 @@ class Identity_Info(NamedTuple):
     no_of_classes: int = 2
     no_of_attr: int = 3
 
-#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 #device = torch.device('cpu')
-device = torch.device("mps")  # Uses Apple GPU
+#device = torch.device("mps")  # Uses Apple GPU
 
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
@@ -45,9 +45,9 @@ parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--workers', default=8, type=int, metavar='N',
                     help='number of data loading workers (default: 8)')
 
-parser.add_argument('--batch-size', default=256, type=int,
+parser.add_argument('--batch-size', default=6, type=int,
                     metavar='N',
-                    help='mini-batch size (default: 256), this is the total '
+                    help='mini-batch size (default: 6), this is the total '
                          'batch size of all GPUs on the current node when '
                          'using Data Parallel or Distributed Data Parallel')
 
@@ -60,7 +60,7 @@ parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
 
-parser.add_argument('--wd', '--weight-decay', default=6e-5, type=float,
+parser.add_argument('--wd', '--weight-decay', default=0., type=float,
                     metavar='W', help='weight decay (default: 6e-5)',
                     dest='weight_decay')
 
@@ -73,9 +73,9 @@ parser.add_argument('--pretrained-weights', default='', type=str)
 
 parser.add_argument('--result_dir', default='./results', type=str)
 parser.add_argument('--data_dir', default='./results', type=str)
-parser.add_argument('--model_type', default='./results', type=str)
+parser.add_argument('--model_type', default='efficientnet', type=str)
 parser.add_argument('--task', default='cls', type=str, help='cls | md | tds')
-parser.add_argument('--image_size', default=224, type=int)
+parser.add_argument('--image_size', default=200, type=int)
 parser.add_argument('--loss_type', default='bce', type=str)
 parser.add_argument('--progression_outcome', default='', type=str)
 parser.add_argument('--modality_types', default='rnflt', type=str, help='rnflt|bscans')
@@ -90,18 +90,16 @@ parser.add_argument('--attribute_type', default='race', type=str, help='race|gen
 
                     
 def set_random_seed(seed):
-    # ✅ Set random seed for Python's random module
-    #random.seed(seed)
-    np.random.seed(seed)
+    import torch
     random.seed(seed)
-    # ✅ Set random seed for NumPy
-    #np.random.seed(seed)
-    
-    # ✅ Set random seed for PyTorch (works for CPU, CUDA, and MPS)
-    #torch.manual_seed(seed)
-    
-    # ✅ Optional: Ensure deterministic behavior (may reduce performance)
-    # torch.use_deterministic_algorithms(True, warn_only=True)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    # (optional, for full determinism)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark     = False
+
 
 activation = {}
 def get_activation(name):
@@ -130,10 +128,10 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
     for i, (input, target, attr) in enumerate(train_dataset_loader):
         optimizer.zero_grad()
 
-        #with torch.cuda.amp.autocast():
+        with torch.cuda.amp.autocast():
         # NEW CODE (MPS-Compatible)
         # float32 cause float16 does not support completely the operations and i would get some Nan predictions
-        with torch.autocast(device_type="mps", dtype=torch.float32):
+        # with torch.autocast(device_type="mps", dtype=torch.float32):
             input = input.to(device)
             target = target.to(device)
             attr = attr.to(device)
@@ -382,6 +380,7 @@ if __name__ == '__main__':
     # ! FIN layer creation
     if args.normalization_type == 'fin':
         ag_norm = Fair_Identity_Normalizer(imb_info.no_of_attr, dim=in_feat_to_final, mu=args.fin_mu, sigma=args.fin_sigma, momentum=args.fin_momentum) #  [0]*imb_info.no_of_attr, [1]*imb_info.no_of_attr
+        # re-initialize each group's μ and σ (or τ) from N(0,1): no tolto
     elif args.normalization_type == 'lbn':
         ag_norm = Learnable_BatchNorm1d(dim=in_feat_to_final)
     elif args.normalization_type == 'bn':
@@ -402,12 +401,11 @@ if __name__ == '__main__':
     #print(f"Initial model before wrapping in Sequential: {model}")
     model = nn.Sequential(model, ag_norm, final_layer)
     model = model.to(device)
-
-    #!scaler = torch.cuda.amp.GradScaler()
-    scaler = torch.amp.GradScaler()  # ✅ Using this for MPS
+    scaler = torch.cuda.amp.GradScaler()
+    # scaler = torch.amp.GradScaler()  # ✅ Using this for MPS
 
     optimizer = AdamW(model.parameters(), lr=args.lr, betas=(0.0, 0.1), weight_decay=args.weight_decay)
-    
+
     scheduler = StepLR(optimizer, step_size=30, gamma=0.1)
     
     start_epoch = 0

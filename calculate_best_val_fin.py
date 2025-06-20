@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 # Path to the 'results' directory containing seed folders
-results_dir = 'paper_results_test/no_fin/race/m09'
+results_dir = '/work3/s232437/fair-medical-AI-fin/results/batch6_imgsize200_fin'
 
 # Initialize lists to store the highest values per seed
 best_val_aucs = []

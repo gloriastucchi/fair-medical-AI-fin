@@ -30,9 +30,7 @@ class Identity_Info(NamedTuple):
     no_of_classes: int = 2
     no_of_attr: int = 3
 
-#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-#device = torch.device('cpu')
-device = torch.device("mps")  # Uses Apple GPU
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 
@@ -48,7 +46,7 @@ parser.add_argument('--batch-size', default=256, type=int,
 parser.add_argument('--epochs', default=10, type=int, metavar='N',
                     help='number of total epochs to run')
 #lr 0.05 original
-parser.add_argument('--lr', '--learning-rate', default=5e-5, type=float,
+parser.add_argument('--lr', '--learning-rate', default=0.05, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
@@ -66,7 +64,7 @@ parser.add_argument('--start-epoch', default=0, type=int)
 parser.add_argument('--pretrained-weights', default='', type=str)
 
 parser.add_argument('--result_dir', default='./results', type=str)
-parser.add_argument('--data_dir', default='/Users/gloriastucchi/Desktop/dataset', type=str)
+parser.add_argument('--data_dir', default='./results', type=str)
 parser.add_argument('--model_type', default='./results', type=str)
 parser.add_argument('--task', default='cls', type=str, help='cls | md | tds')
 parser.add_argument('--image_size', default=224, type=int)
@@ -76,29 +74,17 @@ parser.add_argument('--modality_types', default='rnflt', type=str, help='rnflt|b
 parser.add_argument('--fuse_coef', default=1.0, type=float)
 parser.add_argument('--perf_file', default='', type=str)
 parser.add_argument('--attribute_type', default='race', type=str, help='race|gender')
-            
-#def set_random_seed(seed):
-#    torch.manual_seed(seed)
-#    torch.cuda.manual_seed(seed)
-#    torch.cuda.manual_seed_all(seed) # if use multi-GPU
-#    torch.backends.cudnn.deterministic = False
-#    torch.backends.cudnn.benchmark = True
- #   np.random.seed(seed)
- #   random.seed(seed)
+
 
 def set_random_seed(seed):
-    # ✅ Set random seed for Python's random module
-    #random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed) # if use multi-GPU
+    torch.backends.cudnn.deterministic = False
+    torch.backends.cudnn.benchmark = True
     np.random.seed(seed)
     random.seed(seed)
-    # ✅ Set random seed for NumPy
-    #np.random.seed(seed)
-    
-    # ✅ Set random seed for PyTorch (works for CPU, CUDA, and MPS)
-    #torch.manual_seed(seed)
-    
-    # ✅ Optional: Ensure deterministic behavior (may reduce performance)
-    # torch.use_deterministic_algorithms(True, warn_only=True)
+
 
 def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, total_iteration, identity_Info=None):
     global device
@@ -125,10 +111,10 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
     for i, (input, target, attr) in enumerate(train_dataset_loader):
         optimizer.zero_grad()
 
-         #with torch.cuda.amp.autocast():
+        with torch.cuda.amp.autocast():
         # NEW CODE (MPS-Compatible)
         # float32 cause float16 does not support completely the operations and i would get some Nan predictions
-        with torch.autocast(device_type="mps", dtype=torch.float32):
+        #with torch.autocast(device_type="mps", dtype=torch.float32):
             input = input.to(device)
             target = target.to(device)
 
@@ -194,6 +180,36 @@ def train(model, criterion, optimizer, scaler, train_dataset_loader, epoch, tota
     return np.mean(loss_batch), acc, cur_auc, preds, gts, attrs, [preds_by_attr_tmp, gts_by_attr_tmp, aucs_by_attr], [acc, dpd, dpr, eod, eor]
     
 
+def calculate_ece(y_true, y_pred, n_bins=10):
+    """
+    Calculate Expected Calibration Error
+    Args:
+        y_true: Ground truth labels (0 or 1)
+        y_pred: Predicted probabilities (between 0 and 1)
+        n_bins: Number of bins for calculating calibration
+    """
+    bin_boundaries = np.linspace(0, 1, n_bins + 1)
+    bin_lowers = bin_boundaries[:-1]
+    bin_uppers = bin_boundaries[1:]
+    
+    # Use predicted probabilities directly for confidence scores
+    confidences = y_pred
+    # Get binary predictions by thresholding
+    predictions = (y_pred >= 0.5).astype(float)
+    # Calculate accuracies by comparing predictions with true labels
+    accuracies = (predictions == y_true).astype(float)
+    
+    ece = 0
+    for bin_lower, bin_upper in zip(bin_lowers, bin_uppers):
+        # Find predictions in this bin
+        bin_mask = np.logical_and(confidences > bin_lower, confidences <= bin_upper)
+        if np.sum(bin_mask) > 0:  # If there are predictions in this bin
+            bin_acc = np.mean(accuracies[bin_mask])
+            bin_conf = np.mean(confidences[bin_mask])
+            ece += np.abs(bin_acc - bin_conf) * np.sum(bin_mask) / len(confidences)
+    
+    return ece
+
 def validation(model, criterion, optimizer, validation_dataset_loader, epoch, result_dir=None, identity_Info=None):
     global device
 
@@ -258,11 +274,18 @@ def validation(model, criterion, optimizer, validation_dataset_loader, epoch, re
                                 pred_labels,
                                 sensitive_features=attrs)
 
-    print(f"test <==== epcoh {epoch} loss: {np.mean(loss_batch):.4f} auc: {cur_auc:.4f}")
+    # Calculate overall metrics
+    overall_ece = calculate_ece(gts, preds)
 
+    print(f"validation ====> epoch {epoch}")
+    print(f"Overall metrics - loss: {loss.item():.4f} auc: {cur_auc:.4f} ece: {overall_ece:.4f}")
+    
+    # Calculate metrics for each racial group
     preds_by_attr_tmp = []
     gts_by_attr_tmp = []
     aucs_by_attr = []
+    eces_by_attr = []
+    
     for one_attr in np.unique(attrs).astype(int):
         preds_by_attr_tmp.append(preds[attrs == one_attr])
         gts_by_attr_tmp.append(gts[attrs == one_attr])
@@ -274,6 +297,8 @@ def validation(model, criterion, optimizer, validation_dataset_loader, epoch, re
 
 if __name__ == '__main__':
     args = parser.parse_args()
+    if os.path.exists(os.path.join(args.result_dir, "best_model.pt")):
+        raise RuntimeError(f"⚠️ Directory {args.result_dir} already contains a best_model.pt! You are probably overwriting an old experiment.")
 
     if args.seed < 0:
         args.seed = int(np.random.randint(10000, size=1)[0])

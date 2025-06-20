@@ -1,7 +1,6 @@
 import sys, os
 from PIL import Image
 import blobfile as bf
-from mpi4py import MPI
 import numpy as np
 import random
 import csv

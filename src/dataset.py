@@ -72,7 +72,7 @@ class RNFLT_Dataset_Artifact(Dataset):
             rnflt_path = os.path.join(self.rnflt_path, rnflt_file)
             rnflt_base_img = np.load(rnflt_path, allow_pickle=True)['rnflt_base_crop_artifact_correct']
             # rnflt_base_img = self.interval_mapping(rnflt_base_img, -2, 350, 0, 255)
-            #rnflt_base_img = cv2.normalize(rnflt_base_img, None, alpha = 0, beta = 255, norm_type = cv2.NORM_MINMAX, dtype = cv2.CV_32F)
+            # rnflt_base_img = cv2.normalize(rnflt_base_img, None, alpha = 0, beta = 255, norm_type = cv2.NORM_MINMAX, dtype = cv2.CV_32F)
             
             follow_img = np.load(rnflt_path, allow_pickle=True)['rnflt_follow_crop_artifact_correct']
             

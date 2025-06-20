@@ -32,7 +32,7 @@ class PassionDataset(Dataset):
 
         # Mappa dell'identità (es. fitzpatrick → interi)
         if self.identity_column:
-        # Filtro per includere solo i gruppi validi (FST III–VI)
+            # Filtro per includere solo i gruppi validi (FST III–VI)
             if self.identity_column == "fitzpatrick":
                 self.df = self.df[self.df[self.identity_column].isin([3, 4, 5, 6])]
 
@@ -40,16 +40,14 @@ class PassionDataset(Dataset):
                 val: i for i, val in enumerate(sorted(self.df[self.identity_column].dropna().unique()))
             }
 
-
     def get_default_transforms(self):
         return T.Compose([
-            T.Resize((256, 256)),
-            T.RandomCrop(224),
-            T.RandomHorizontalFlip(),
-            T.RandomVerticalFlip(),
-            T.RandomRotation(90),
+            T.Resize((256, 256)),             # Resize a 256x256
+            T.CenterCrop(224),                # Taglio centrato
+            T.RandomHorizontalFlip(p=0.5),    # Flip orizzontale (light augmentation)
             T.ToTensor(),
-            T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+            T.Normalize(mean=[0.485, 0.456, 0.406],
+                        std=[0.229, 0.224, 0.225])
         ])
 
     def __len__(self):
