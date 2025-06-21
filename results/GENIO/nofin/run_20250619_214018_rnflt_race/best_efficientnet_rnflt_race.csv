@@ -1,0 +1,2 @@
+epoch, es_acc, acc, acc_class0, acc_class1, acc_class2, es_auc, auc, auc_class0, auc_class1, auc_class2, dpd, dpr, eod, eor, path
+3, 0.6886, 0.7667, 0.8067, 0.7100, 0.7833, 0.7878, 0.8478, 0.8740, 0.8011, 0.8510, 0.1567, 0.7283, 0.1900, 0.4029, ./results/GENIO/nofin/run_20250619_214018_rnflt_race/fullysup_efficientnet_rnflt_Taskcls_lr5e-5_bz6_auc0.8478

@@ -1,4 +1,0 @@
-Logging to ./results
-trn patients 2100 with 2100 samples, val patients 900 with 900 samples
-group information:
-[673 689 686]
