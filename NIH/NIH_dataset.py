@@ -20,8 +20,9 @@ class ChestXrayDataset(Dataset):
         self.all_labels = [
             'Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema', 'Effusion',
             'Emphysema', 'Fibrosis', 'Hernia', 'Infiltration', 'Mass',
-            'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax', 'No Finding'
+            'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax'
         ]
+
 
         # print("all labels", self.all_labels)
 
@@ -36,19 +37,33 @@ class ChestXrayDataset(Dataset):
         if subset_size and len(self.data) > subset_size:
             self.data = self.data.sample(n=subset_size, random_state=42)
 
-        # One-hot encode labels and ensure 15 columns
-        #print("onehot encoding", self.data["Finding Labels"])
+        # One-hot encode labels and ensure all 14 disease columns (exclude "No Finding" at first)
         label_columns = self.data["Finding Labels"].str.get_dummies(sep="|")
-        #print("label columns after get dummies", label_columns)
 
-        # Ensure all 15 labels exist, even if some are missing from the subset
-        for label in self.all_labels:
+        # Define true diseases (exclude "No Finding")
+        disease_labels = [l for l in self.all_labels if l != "No Finding"]
+
+        # Ensure all columns exist
+        for label in disease_labels:
             if label not in label_columns.columns:
-                label_columns[label] = 0  # Add missing labels as zeros
+                label_columns[label] = 0
 
-        label_columns = label_columns[self.all_labels]
-        #print("label columns", label_columns)
+        label_columns = label_columns[disease_labels]
+
+        # Drop samples with no disease (all labels = 0)
+        mask = label_columns.sum(axis=1) > 0
+        self.data = self.data[mask].reset_index(drop=True)
+        label_columns = label_columns[mask].reset_index(drop=True)
+
+
+        # Derive "No Finding" as: 1 if all 14 disease labels are 0
+        #label_columns["No Finding"] = (label_columns.sum(axis=1) == 0).astype(int)
+
+        # Reorder columns to original order
+        #label_columns = label_columns[self.all_labels]
+
         self.labels = label_columns.values
+
         #print("labels", self.labels)
         #print("self data", self.data)
                 # Apply multilabel stratified sampling if requested
@@ -110,7 +125,10 @@ class ChestXrayDataset(Dataset):
         plt.title('Overall Class Distribution')
         plt.tight_layout()
         plot_filename = f"dataset_distribution.png"
-        plt.savefig(os.path.join('NIH/dataset_distributions', plot_filename)) 
+        output_dir = os.path.join(os.path.dirname(__file__), "dataset_distributions")
+        os.makedirs(output_dir, exist_ok=True)
+        plt.savefig(os.path.join(output_dir, plot_filename))
+
 
         # Class distribution by gender
         if "Patient Gender" in self.data.columns:
@@ -144,7 +162,10 @@ class ChestXrayDataset(Dataset):
                 plt.title(f'Class Distribution for {"Male" if gender == "M" else "Female"} Patients')
                 plt.tight_layout()
                 plot_filename = f"gender_distribution_{gender}.png"
-                plt.savefig(os.path.join('NIH/dataset_distributions', plot_filename)) 
+                output_dir = os.path.join(os.path.dirname(__file__), "dataset_distributions")
+                os.makedirs(output_dir, exist_ok=True)
+                plt.savefig(os.path.join(output_dir, plot_filename))
+ 
 
     def __len__(self):
         return len(self.data)
@@ -168,7 +189,7 @@ transform = transforms.Compose([
     transforms.Grayscale(num_output_channels=3),  # Convert grayscale to 3-channel RGB
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]) # ! SHOULD I REMOVE NORMALIZATIO IN ORDER TO APPLY FIN CORRECTLY?
+    #transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]) # ! SHOULD I REMOVE NORMALIZATIO IN ORDER TO APPLY FIN CORRECTLY?
 ])
 
 if __name__ == "__main__":

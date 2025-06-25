@@ -30,10 +30,10 @@ feature_dim = 512
 if args.use_fin:
     base_model = ChestXrayModel(num_classes=feature_dim)
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH_fulldata_model_fin_bce_loss0.1260.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_fin_focal_loss0.0865.pth"))
 else:
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH_fulldata_model_nofin_bce_loss0.1246.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_nofin_focal_loss0.0523.pth"))
 
 model.eval()
 
@@ -58,24 +58,38 @@ for i in range(num_classes):
     if len(np.unique(y_true)) < 2:
         optimal_thresholds.append(np.nan)
         continue
-    best_thresh, best_f1 = 0.0, 0.0
+    best_thresh, best_j = 0.0, -1.0
     for t in np.linspace(0, 1, 101):
-        f1 = f1_score(y_true, y_prob >= t, zero_division=0)
-        if f1 > best_f1:
-            best_f1, best_thresh = f1, t
+        y_pred_thresh = (y_prob >= t).astype(int)
+        tn, fp, fn, tp = confusion_matrix(y_true, y_pred_thresh, labels=[0,1]).ravel()
+        tpr = tp / (tp + fn + 1e-6)
+        fpr = fp / (fp + tn + 1e-6)
+        youden_j = tpr - fpr
+        if youden_j > best_j:
+            best_j = youden_j
+            best_thresh = t
     optimal_thresholds.append(best_thresh)
     final_preds[:, i] = (y_prob >= best_thresh).astype(int)
+
 
 class_names = [
     'Atelectasis', 'Cardiomegaly', 'Consolidation', 'Edema', 'Effusion',
     'Emphysema', 'Fibrosis', 'Hernia', 'Infiltration', 'Mass',
-    'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax', 'No Finding'
+    'Nodule', 'Pleural_Thickening', 'Pneumonia', 'Pneumothorax'
 ]
 
 male_mask = all_groups == 0
 female_mask = all_groups == 1
 
 rows = []
+
+# === Inspect Thresholds ===
+thresholds_df = pd.DataFrame({"Class": class_names, "OptimalThreshold": optimal_thresholds})
+print("\n🔍 Optimal Thresholds per Class:")
+print(thresholds_df.to_string(index=False))
+
+# Optional: Save to CSV
+thresholds_df.to_csv(f"NIH_thresholds_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
 
 # === Compute Per-Class + Gender Metrics Table ===
 for i in range(num_classes):
@@ -129,5 +143,16 @@ acc_female = accuracy_score(all_labels[female_mask].flatten(), final_preds[femal
 print("\n🎯 Accuracy per Gender (with optimized thresholds):")
 print(f"Male Accuracy:   {acc_male:.4f}")
 print(f"Female Accuracy: {acc_female:.4f}")
+
+df.to_csv(f"NIH_eval_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
+thresholds_df = pd.DataFrame({"Class": class_names, "OptimalThreshold": optimal_thresholds})
+thresholds_df.to_csv(f"NIH_thresholds_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
+auc_macro = roc_auc_score(all_labels, all_predictions, average='macro')
+auc_micro = roc_auc_score(all_labels, all_predictions, average='micro')
+print(f"\nGlobal AUC (Macro): {auc_macro:.4f}")
+print(f"Global AUC (Micro): {auc_micro:.4f}")
+gender_gap_auc = df[df["Class"].str.contains("Male")]["AUC"].values - df[df["Class"].str.contains("Female")]["AUC"].values
+print(f"\n📉 Avg AUC gap (Male - Female): {np.nanmean(gender_gap_auc):.4f}")
+
 
 print("\n✅ Evaluation complete!")

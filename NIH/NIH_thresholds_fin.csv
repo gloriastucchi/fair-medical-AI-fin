@@ -1,0 +1,15 @@
+Class,OptimalThreshold
+Atelectasis,0.0
+Cardiomegaly,0.13
+Consolidation,0.14
+Edema,0.46
+Effusion,0.0
+Emphysema,0.53
+Fibrosis,0.28
+Hernia,0.2
+Infiltration,0.0
+Mass,0.99
+Nodule,0.99
+Pleural_Thickening,0.09
+Pneumonia,0.1
+Pneumothorax,0.24

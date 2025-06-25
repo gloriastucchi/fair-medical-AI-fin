@@ -57,7 +57,7 @@ TEST_LIST = "/zhome/4b/b/202548/NIH/test_list.txt"
 # Create training dataset (LIMITED to 20.000 samples)
 train_dataset = ChestXrayDataset(
     CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform,
-    subset_size=None, stratify=True
+    subset_size=None, stratify=False
 )
 train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, num_workers=4)
 print(f"✅ Training on {len(train_loader.dataset)} samples.")  # inside ChestXrayDataset
@@ -86,7 +86,7 @@ if args.use_fin:
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
 else:
     print("✅ Using standard ResNet model for training.")
-    model = ChestXrayModel(num_classes=15).to(device)
+    model = ChestXrayModel(num_classes=14).to(device)
 
 # Define loss and optimizer
 if args.loss_type == "focal":
@@ -109,6 +109,7 @@ for epoch in range(num_epochs):
         images, labels = images.to(device), labels.to(device)
 
         optimizer.zero_grad()
+        identity_group = identity_group.to(device)
         outputs = model(images, identity_group) if args.use_fin else model(images)  # ✅ Pass identity_group when using FIN
         loss = criterion(outputs, labels)
         loss.backward()
