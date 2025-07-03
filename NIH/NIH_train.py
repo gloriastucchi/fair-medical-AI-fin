@@ -10,6 +10,33 @@ from tqdm import tqdm
 import time
 import numpy as np
 
+from sklearn.metrics import roc_auc_score
+
+@torch.no_grad()
+def evaluate_auc(model, val_loader, use_fin, device):
+    model.eval()
+    all_preds, all_labels = [], []
+
+    for images, labels, groups in val_loader:
+        images, labels, groups = images.to(device), labels.to(device), groups.to(device)
+        outputs = model(images, groups) if use_fin else model(images)
+        probs = torch.sigmoid(outputs)
+        all_preds.append(probs.cpu())
+        all_labels.append(labels.cpu())
+    
+    all_preds = torch.cat(all_preds).numpy()
+    all_labels = torch.cat(all_labels).numpy()
+
+    from sklearn.metrics import roc_auc_score
+    try:
+        auc = roc_auc_score(all_labels, all_preds, average='macro')
+    except ValueError:
+        auc = float('nan')
+
+    return auc
+
+
+
 class FocalLoss(nn.Module):
     def __init__(self, alpha=1.0, gamma=0.5, reduction='mean'):
         super(FocalLoss, self).__init__()
@@ -54,12 +81,15 @@ IMAGE_FOLDER = "/work3/s232437/images_full/images/"
 TRAIN_LIST = "/zhome/4b/b/202548/NIH/train_val_list.txt"
 TEST_LIST = "/zhome/4b/b/202548/NIH/test_list.txt"
 
-# Create training dataset (LIMITED to 20.000 samples)
-train_dataset = ChestXrayDataset(
-    CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform,
-    subset_size=None, stratify=False
-)
+TRAIN_LIST = "/work3/s232437/fair-medical-AI-fin/NIH/train_list.txt"
+VAL_LIST = "/work3/s232437/fair-medical-AI-fin/NIH/val_list.txt"
+
+train_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform)
+val_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, VAL_LIST, transform)
+
 train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True, num_workers=4)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False, num_workers=4)
+
 print(f"✅ Training on {len(train_loader.dataset)} samples.")  # inside ChestXrayDataset
  # ! does not consider subset dimension
 full_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TRAIN_LIST, transform)
@@ -98,33 +128,40 @@ else:
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # Training loop
-num_epochs = 5
+num_epochs = 15
+best_val_auc = 0.0
+
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
-    start_time = time.time()
-    
-    progress_bar = tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}")
-    for images, labels, identity_group in progress_bar:  # ✅ Now expecting 3 values
-        images, labels = images.to(device), labels.to(device)
 
+    for images, labels, groups in tqdm(train_loader, desc=f"Epoch {epoch+1}/{num_epochs}"):
+        images, labels, groups = images.to(device), labels.to(device), groups.to(device)
         optimizer.zero_grad()
-        identity_group = identity_group.to(device)
-        outputs = model(images, identity_group) if args.use_fin else model(images)  # ✅ Pass identity_group when using FIN
+        outputs = model(images, groups) if args.use_fin else model(images)
         loss = criterion(outputs, labels)
         loss.backward()
         optimizer.step()
-
         total_loss += loss.item()
-        progress_bar.set_postfix({"Batch Loss": loss.item()})
-    
-    print(f"Epoch {epoch+1}/{num_epochs}, Loss: {total_loss/len(train_loader):.4f}")
+
+    avg_loss = total_loss / len(train_loader)
+    print(f"Epoch {epoch+1} finished. Avg Loss: {avg_loss:.4f}")
+
+    # ✅ Evaluate on validation set
+    val_auc = evaluate_auc(model, val_loader, use_fin=args.use_fin, device=device)
+    print(f"📈 Validation AUC: {val_auc:.4f}")
+
+    if val_auc > best_val_auc:
+        best_val_auc = val_auc
+        torch.save(model.state_dict(), f"m0.4_best_model_epoch{epoch+1}_auc{val_auc:.4f}.pth")
+        print("💾 Saved new best model.")
+
 
 # Salva il modello con nome che riflette FIN, tipo di loss e loss finale
 fin_tag = "fin" if args.use_fin else "nofin"
 loss_tag = args.loss_type
 final_loss_tag = f"{total_loss/len(train_loader):.4f}"
-model_filename = f"NIH_model_{fin_tag}_{loss_tag}_loss{final_loss_tag}.pth"
+model_filename = f"0.4_NIH_model_{fin_tag}_{loss_tag}_loss{final_loss_tag}.pth"
 
 torch.save(model.state_dict(), model_filename)
 print(f"✅ Model saved as '{model_filename}' 🎉")

@@ -186,10 +186,10 @@ class ChestXrayDataset(Dataset):
 
 # Define transformations
 transform = transforms.Compose([
-    transforms.Grayscale(num_output_channels=3),  # Convert grayscale to 3-channel RGB
-    transforms.Resize((224, 224)),
+    transforms.Resize((320, 320)),
     transforms.ToTensor(),
-    #transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]) # ! SHOULD I REMOVE NORMALIZATIO IN ORDER TO APPLY FIN CORRECTLY?
+    transforms.Normalize([0.485, 0.456, 0.406],  # ImageNet means
+                         [0.229, 0.224, 0.225])  # ImageNet stds
 ])
 
 if __name__ == "__main__":

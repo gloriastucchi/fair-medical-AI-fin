@@ -2,21 +2,27 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
+import torch
+import torch.nn as nn
+import torchvision.models as models
+
 class ChestXrayModel(nn.Module):
-    def __init__(self, num_classes):
+    def __init__(self, num_classes=14):
         super(ChestXrayModel, self).__init__()
-        resnet = models.resnet18(pretrained=True)
-        self.backbone = nn.Sequential(*list(resnet.children())[:-1])  # tutto fino al penultimo layer (global avg pooling)
-        self.feature_dim = resnet.fc.in_features  # 512
-        self.fc = nn.Linear(self.feature_dim, num_classes)  # output layer (solo per baseline)
+        densenet = models.densenet121(pretrained=True)
+        num_ftrs = densenet.classifier.in_features
+        densenet.classifier = nn.Linear(num_ftrs, num_classes)
+        self.model = densenet
 
     def forward(self, x):
-        features = self.backbone(x).squeeze(-1).squeeze(-1)  # da [B, 512, 1, 1] → [B, 512]
-        return self.fc(features)
+        return self.model(x)
 
     def extract_features(self, x):
-        features = self.backbone(x).squeeze(-1).squeeze(-1)
-        return features
+        features = self.model.features(x)
+        out = nn.functional.relu(features, inplace=True)
+        out = nn.functional.adaptive_avg_pool2d(out, (1, 1)).view(features.size(0), -1)
+        return out
+
 
 
 # Example usage

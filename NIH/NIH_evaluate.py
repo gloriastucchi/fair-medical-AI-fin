@@ -23,17 +23,17 @@ TEST_LIST = "/work3/s232437/fair-medical-AI-fin/NIH/test_list.txt"
 test_dataset = ChestXrayDataset(CSV_FILE, IMAGE_FOLDER, TEST_LIST, transform)
 test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers=4)
 
-num_classes = test_dataset.labels.shape[1]
+num_classes = 14
 num_groups = 2
 feature_dim = 512
 
 if args.use_fin:
     base_model = ChestXrayModel(num_classes=feature_dim)
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_fin_focal_loss0.0865.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/0.4_NIH_model_fin_bce_loss0.0408.pth"))
 else:
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_nofin_focal_loss0.0523.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_nofin_bce_loss0.0398.pth"))
 
 model.eval()
 
@@ -153,6 +153,31 @@ print(f"\nGlobal AUC (Macro): {auc_macro:.4f}")
 print(f"Global AUC (Micro): {auc_micro:.4f}")
 gender_gap_auc = df[df["Class"].str.contains("Male")]["AUC"].values - df[df["Class"].str.contains("Female")]["AUC"].values
 print(f"\n📉 Avg AUC gap (Male - Female): {np.nanmean(gender_gap_auc):.4f}")
+# === ES-AUC Computation per class ===
+esauc_values = []
+for cls in class_names:
+    try:
+        overall_auc = df[df["Class"].str.contains(cls)]["AUC"].mean()
+        male_auc = df[df["Class"] == f"{cls} (Male)"]["AUC"].values[0]
+        female_auc = df[df["Class"] == f"{cls} (Female)"]["AUC"].values[0]
+        group_gaps = abs(male_auc - overall_auc) + abs(female_auc - overall_auc)
+        es_auc = overall_auc / (1 + group_gaps)
+    except Exception:
+        es_auc = np.nan
+    esauc_values.append(es_auc)
+
+# Add to the dataframe (only once per class, Male row)
+for i, es_auc in enumerate(esauc_values):
+    for j in df.index:
+        if df.loc[j, "Class"] == f"{class_names[i]} (Male)":
+            df.loc[j, "ES-AUC"] = es_auc
+        elif df.loc[j, "Class"] == f"{class_names[i]} (Female)":
+            df.loc[j, "ES-AUC"] = ""  # Leave it blank for Female row
+
+# Save updated CSV with ES-AUC
+eval_csv_path = f"m0,4_NIH_eval_{'fin' if args.use_fin else 'nofin'}.csv"
+df.to_csv(eval_csv_path, index=False)
+print(f"\n📄 Saved updated evaluation CSV with ES-AUC: {eval_csv_path}")
 
 
 print("\n✅ Evaluation complete!")
