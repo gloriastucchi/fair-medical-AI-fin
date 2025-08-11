@@ -1,0 +1,18 @@
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lccccccccccc}
+\toprule
+Disease & AUC (3) & AUC (4) & AUC (5) & AUC (6) & Overall AUC & Acc (3) & Acc (4) & Acc (5) & Acc (6) & Overall Acc & ES-AUC \\
+\midrule
+Eczema & 0.8683 $\pm$ 0.0262 & 0.8393 $\pm$ 0.0037 & 0.8795 $\pm$ 0.0051 & 0.7909 $\pm$ 0.0241 & 0.8553 $\pm$ 0.0102 & 0.7703 $\pm$ 0.0191 & 0.8109 $\pm$ 0.0163 & 0.8374 $\pm$ 0.0058 & 0.8075 $\pm$ 0.0370 & 0.8076 $\pm$ 0.0151 & 0.7602 $\pm$ 0.0152 \\
+Fungal & 0.8916 $\pm$ 0.0259 & 0.8431 $\pm$ 0.0191 & 0.8349 $\pm$ 0.0273 & 0.8552 $\pm$ 0.0007 & 0.8716 $\pm$ 0.0108 & 0.8649 $\pm$ 0.0110 & 0.8301 $\pm$ 0.0091 & 0.8130 $\pm$ 0.0230 & 0.7840 $\pm$ 0.0239 & 0.8237 $\pm$ 0.0122 & 0.7916 $\pm$ 0.0197 \\
+Scabies & 0.8840 $\pm$ 0.0299 & 0.8772 $\pm$ 0.0327 & 0.9369 $\pm$ 0.0142 & 0.9301 $\pm$ 0.0274 & 0.9075 $\pm$ 0.0151 & 0.9054 $\pm$ 0.0292 & 0.9487 $\pm$ 0.0164 & 0.9512 $\pm$ 0.0173 & 0.9155 $\pm$ 0.0115 & 0.9325 $\pm$ 0.0111 & 0.8177 $\pm$ 0.0536 \\
+Other & 0.9822 $\pm$ 0.0070 & 0.9553 $\pm$ 0.0103 & 0.9602 $\pm$ 0.0078 & 0.9204 $\pm$ 0.0356 & 0.9612 $\pm$ 0.0079 & 0.9279 $\pm$ 0.0278 & 0.8782 $\pm$ 0.0163 & 0.9024 $\pm$ 0.0100 & 0.9108 $\pm$ 0.0240 & 0.9023 $\pm$ 0.0164 & 0.9000 $\pm$ 0.0317 \\
+\bottomrule
+\end{tabular}
+}
+\caption{FIN Per-disease subgroup AUC, accuracy, and ES-AUC values (mean $\pm$ std) on PASSION. Metrics are reported for Fitzpatrick groups 3--6 and overall.}
+\label{tab:passion_final_results_std}
+\end{table}

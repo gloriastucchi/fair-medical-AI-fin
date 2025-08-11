@@ -101,7 +101,7 @@ def main():
         plt.text(i, y_min - (y_max-y_min)*0.05,
                  f"n={counts[r]}", ha='center', va='top', fontsize=12)
 
-    plt.ylim(y_min - (y_max-y_min)*0.1, y_max + (y_max-y_min)*0.1)
+    plt.ylim(y_min - (y_max-y_min)*0.1, y_max - 100)
     plt.tight_layout()
 
     out_png = os.path.join(args.output_dir, 'rnflt_by_race.png')

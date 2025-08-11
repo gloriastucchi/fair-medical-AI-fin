@@ -25,15 +25,15 @@ test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False, num_workers
 
 num_classes = 14
 num_groups = 2
-feature_dim = 512
+feature_dim = 1024
 
 if args.use_fin:
     base_model = ChestXrayModel(num_classes=feature_dim)
     model = FairChestXrayModel(base_model, feature_dim, num_groups).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/0.4_NIH_model_fin_bce_loss0.0408.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/FINALFIN_NIH_model_fin_bce_loss0.0382_seed42.pth"))
 else:
     model = ChestXrayModel(num_classes=num_classes).to(device)
-    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NIH_model_nofin_bce_loss0.0398.pth"))
+    model.load_state_dict(torch.load("/work3/s232437/fair-medical-AI-fin/NIH/NOFIN_NIH_model_nofin_bce_loss0.0389_seed221146.pth"))
 
 model.eval()
 
@@ -89,7 +89,7 @@ print("\n🔍 Optimal Thresholds per Class:")
 print(thresholds_df.to_string(index=False))
 
 # Optional: Save to CSV
-thresholds_df.to_csv(f"NIH_thresholds_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
+thresholds_df.to_csv(f"GENIO_NIH_thresholds_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
 
 # === Compute Per-Class + Gender Metrics Table ===
 for i in range(num_classes):
@@ -144,7 +144,7 @@ print("\n🎯 Accuracy per Gender (with optimized thresholds):")
 print(f"Male Accuracy:   {acc_male:.4f}")
 print(f"Female Accuracy: {acc_female:.4f}")
 
-df.to_csv(f"NIH_eval_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
+df.to_csv(f"FINALFINNIH_eval_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
 thresholds_df = pd.DataFrame({"Class": class_names, "OptimalThreshold": optimal_thresholds})
 thresholds_df.to_csv(f"NIH_thresholds_{'fin' if args.use_fin else 'nofin'}.csv", index=False)
 auc_macro = roc_auc_score(all_labels, all_predictions, average='macro')
@@ -175,7 +175,7 @@ for i, es_auc in enumerate(esauc_values):
             df.loc[j, "ES-AUC"] = ""  # Leave it blank for Female row
 
 # Save updated CSV with ES-AUC
-eval_csv_path = f"m0,4_NIH_eval_{'fin' if args.use_fin else 'nofin'}.csv"
+eval_csv_path = f"FINALFINNIH_eval_{'fin' if args.use_fin else 'nofin'}_seed42.csv"
 df.to_csv(eval_csv_path, index=False)
 print(f"\n📄 Saved updated evaluation CSV with ES-AUC: {eval_csv_path}")
 

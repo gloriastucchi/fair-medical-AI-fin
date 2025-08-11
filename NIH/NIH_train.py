@@ -9,6 +9,8 @@ from NIH_dataset import ChestXrayDataset, transform
 from tqdm import tqdm
 import time
 import numpy as np
+import random
+
 
 from sklearn.metrics import roc_auc_score
 
@@ -60,14 +62,24 @@ class FocalLoss(nn.Module):
             return loss.sum()
         return loss
 
-
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--loss_type", default="bce", choices=["bce", "focal"],
                     help="Loss function to use: 'bce' or 'focal'")
 parser.add_argument("--use_fin", action="store_true", help="Use FIN model instead of standard ResNet model")  # ✅ Correct
+parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
 args = parser.parse_args()
 
+
+
+set_seed(args.seed)
 # Define paths
 #CSV_FILE = "/Users/gloriastucchi/Desktop/NIH/Data_Entry_2017_v2020_.csv"
 #no hpc
@@ -107,7 +119,7 @@ test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 # ✅ Choose Model Based on Argument
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-feature_dim = 512  # ResNet18 feature dimension
+feature_dim = 1024  # DENSENET18 feature dimension
 num_groups = 2  # Example: Male/Female
 
 if args.use_fin:
@@ -147,21 +159,21 @@ for epoch in range(num_epochs):
     avg_loss = total_loss / len(train_loader)
     print(f"Epoch {epoch+1} finished. Avg Loss: {avg_loss:.4f}")
 
-    # ✅ Evaluate on validation set
+    # Evaluate on validation set
     val_auc = evaluate_auc(model, val_loader, use_fin=args.use_fin, device=device)
-    print(f"📈 Validation AUC: {val_auc:.4f}")
+    print(f"Validation AUC: {val_auc:.4f}")
 
     if val_auc > best_val_auc:
         best_val_auc = val_auc
-        torch.save(model.state_dict(), f"m0.4_best_model_epoch{epoch+1}_auc{val_auc:.4f}.pth")
-        print("💾 Saved new best model.")
+        torch.save(model.state_dict(), f"FINALFIN_best_model_epoch{epoch+1}_auc{val_auc:.4f}.pth")
+        print("Saved new best model.")
 
 
 # Salva il modello con nome che riflette FIN, tipo di loss e loss finale
 fin_tag = "fin" if args.use_fin else "nofin"
 loss_tag = args.loss_type
 final_loss_tag = f"{total_loss/len(train_loader):.4f}"
-model_filename = f"0.4_NIH_model_{fin_tag}_{loss_tag}_loss{final_loss_tag}.pth"
+model_filename = f"FINALFIN_NIH_model_{fin_tag}_{loss_tag}_loss{final_loss_tag}_seed{args.seed}.pth"
 
 torch.save(model.state_dict(), model_filename)
 print(f"✅ Model saved as '{model_filename}' 🎉")

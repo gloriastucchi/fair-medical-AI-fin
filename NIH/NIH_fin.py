@@ -15,7 +15,7 @@ class FairIdentityNormalization(nn.Module):
 
 
 class FairChestXrayModel(nn.Module):
-    def __init__(self, base_model, feature_dim, num_groups, m=0.4):
+    def __init__(self, base_model, feature_dim, num_groups, m=0.3):
         super(FairChestXrayModel, self).__init__()
         self.base_model = base_model
         self.fin = FairIdentityNormalization(feature_dim, num_groups)
@@ -23,7 +23,8 @@ class FairChestXrayModel(nn.Module):
         self.m = m  # momentum blending parameter
 
     def forward(self, x, identity_group):
-        features = self.base_model(x)
+        #features = self.base_model(x)
+        features = self.base_model(x)  # `extract_features_only=True` fa restituire le feature
         normalized_features = self.fin(features, identity_group)
 
         # Apply momentum blending: z' = (1 - m) * ẑ + m * z

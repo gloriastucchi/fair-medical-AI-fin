@@ -2,30 +2,31 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 
-import torch
-import torch.nn as nn
-import torchvision.models as models
-
 class ChestXrayModel(nn.Module):
-    def __init__(self, num_classes=14):
+    def __init__(self, num_classes=14, extract_features_only=True):
         super(ChestXrayModel, self).__init__()
         densenet = models.densenet121(pretrained=True)
-        num_ftrs = densenet.classifier.in_features
-        densenet.classifier = nn.Linear(num_ftrs, num_classes)
-        self.model = densenet
+        self.feature_extractor = densenet.features  # Output: (B, 1024, 7, 7)
+        self.avg_pool = nn.AdaptiveAvgPool2d((1, 1))
+        self.relu = nn.ReLU(inplace=True)
+
+        self.extract_features_only = extract_features_only
+        self.num_features = 1024  # DenseNet121 final feature dimension
+        self.classifier = nn.Linear(self.num_features, num_classes)
 
     def forward(self, x):
-        return self.model(x)
+        x = self.feature_extractor(x)                 # -> (B, 1024, 7, 7)
+        x = self.relu(x)
+        x = self.avg_pool(x)                          # -> (B, 1024, 1, 1)
+        x = x.view(x.size(0), -1)                     # -> (B, 1024)
 
-    def extract_features(self, x):
-        features = self.model.features(x)
-        out = nn.functional.relu(features, inplace=True)
-        out = nn.functional.adaptive_avg_pool2d(out, (1, 1)).view(features.size(0), -1)
-        return out
+        if self.extract_features_only:
+            return x                                  # output per FIN
+        else:
+            return self.classifier(x)                 # output classificazione
 
 
 
-# Example usage
 if __name__ == "__main__":
     model = ChestXrayModel(num_classes=14)  # 15 disease labels - "no finding" esclusa
     print(model)

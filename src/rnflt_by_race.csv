@@ -1,0 +1,901 @@
+pid,race,rnflt_mean
+data_3050,Asian,68.58563917138396
+data_2748,Black or African American,60.45938453697563
+data_3125,Asian,66.49680402455755
+data_2918,Black or African American,70.41456036431681
+data_2832,Black or African American,63.6974508591329
+data_2881,Black or African American,76.0198812998597
+data_3051,Asian,55.91598368667263
+data_2587,White or Caucasian,61.0771578837341
+data_2517,White or Caucasian,56.35007586183944
+data_3122,Asian,51.03583483032662
+data_3013,Asian,73.04707584066911
+data_2581,White or Caucasian,76.35342673981158
+data_2519,White or Caucasian,53.51689664071652
+data_2420,White or Caucasian,74.69222559617909
+data_2575,White or Caucasian,70.03120653689929
+data_3145,Asian,75.12580153985284
+data_2875,Black or African American,51.25330290102974
+data_2425,White or Caucasian,85.55831084472668
+data_2632,White or Caucasian,70.79615749465889
+data_2588,White or Caucasian,75.84996484681307
+data_3120,Asian,81.41379453956803
+data_3061,Asian,60.46504655238019
+data_3109,Asian,63.989464252854276
+data_2841,Black or African American,67.85665515871841
+data_3194,Asian,85.3323770736716
+data_2591,White or Caucasian,65.21638996808078
+data_2518,White or Caucasian,67.81847794838647
+data_2862,Black or African American,54.49551427086933
+data_3280,Asian,85.23951567890474
+data_2616,White or Caucasian,63.37344320924944
+data_2656,White or Caucasian,51.647582938769986
+data_3160,Asian,84.01181815314192
+data_2923,Black or African American,113.50329258149758
+data_3017,Asian,59.897044960031856
+data_3070,Asian,72.26725169092806
+data_3016,Asian,60.6438018137562
+data_2446,White or Caucasian,79.73155855347972
+data_2611,White or Caucasian,66.86843415887544
+data_2770,Black or African American,76.0504563077145
+data_2804,Black or African American,64.19530893148823
+data_2612,White or Caucasian,84.14318642256274
+data_3233,Asian,74.60845179041652
+data_2866,Black or African American,50.42876657790089
+data_2464,White or Caucasian,91.72650367976082
+data_3295,Asian,63.66231361898372
+data_2600,White or Caucasian,85.77314368603244
+data_3065,Asian,69.26294948821852
+data_3245,Asian,54.64516243784962
+data_2481,White or Caucasian,61.50254089199706
+data_3101,Asian,84.54380831342498
+data_2703,Black or African American,69.64934422290443
+data_2580,White or Caucasian,74.87646178641565
+data_2428,White or Caucasian,74.14171726724332
+data_3138,Asian,80.2859688923704
+data_3229,Asian,69.56401163531132
+data_2904,Black or African American,74.85996636071515
+data_2711,Black or African American,67.34886669163504
+data_2456,White or Caucasian,65.12763842019778
+data_2540,White or Caucasian,70.60479552819417
+data_2618,White or Caucasian,58.899487416205766
+data_3227,Asian,80.57850650372694
+data_2642,White or Caucasian,76.87483518452252
+data_2653,White or Caucasian,63.31553513539175
+data_2716,Black or African American,70.81914248241135
+data_3137,Asian,58.31659127452011
+data_3067,Asian,90.266362703815
+data_2708,Black or African American,80.4228946546296
+data_2485,White or Caucasian,74.01749097740776
+data_2925,Black or African American,71.09039795994002
+data_3043,Asian,62.81999436010846
+data_2655,White or Caucasian,66.76030293376807
+data_2460,White or Caucasian,64.4181271659252
+data_3294,Asian,57.77185409158003
+data_2739,Black or African American,62.378451028328776
+data_2835,Black or African American,66.18594370909577
+data_2459,White or Caucasian,70.91926329090035
+data_2415,White or Caucasian,73.13392654705564
+data_2563,White or Caucasian,53.102591176466326
+data_2712,Black or African American,76.11333386084861
+data_2690,White or Caucasian,71.34546946593656
+data_2638,White or Caucasian,66.96844063255038
+data_3190,Asian,89.39777238745125
+data_2737,Black or African American,64.25062328977724
+data_2717,Black or African American,110.22405519475267
+data_3041,Asian,81.2103399406307
+data_3218,Asian,82.36587695298874
+data_2699,White or Caucasian,77.14765681537935
+data_2687,White or Caucasian,84.6863722027483
+data_3148,Asian,60.282455843633045
+data_2897,Black or African American,112.01084432860408
+data_2514,White or Caucasian,71.07951906396569
+data_3082,Asian,73.71433114898417
+data_3019,Asian,86.54945968263549
+data_2640,White or Caucasian,83.76845659881259
+data_2779,Black or African American,71.09184398765014
+data_2761,Black or African American,57.864167333647046
+data_2427,White or Caucasian,52.920287466602915
+data_3292,Asian,73.82995658175629
+data_2496,White or Caucasian,75.24325226682909
+data_2465,White or Caucasian,80.42147256837522
+data_2636,White or Caucasian,66.5038863084989
+data_2855,Black or African American,54.19038776422462
+data_3048,Asian,79.33554627509483
+data_2677,White or Caucasian,79.79401613127777
+data_2909,Black or African American,62.66705716967607
+data_3144,Asian,64.84353764427675
+data_2764,Black or African American,59.4769785836652
+data_2936,Black or African American,61.078227376983065
+data_2671,White or Caucasian,78.02129378190915
+data_2893,Black or African American,60.9084042529802
+data_2658,White or Caucasian,71.5943508346233
+data_2718,Black or African American,79.30894143368195
+data_3180,Asian,78.4801803823604
+data_3273,Asian,82.47069952655679
+data_2568,White or Caucasian,59.93532214370113
+data_2987,Black or African American,75.14568710517989
+data_2665,White or Caucasian,66.03525362853911
+data_2771,Black or African American,76.84361744965952
+data_2695,White or Caucasian,81.40004891117087
+data_2876,Black or African American,105.05658566778628
+data_3030,Asian,64.8497628793699
+data_3266,Asian,53.65999981141081
+data_2583,White or Caucasian,65.34494513100606
+data_2811,Black or African American,65.4686466969134
+data_2948,Black or African American,77.57083719777768
+data_2567,White or Caucasian,80.94885551830296
+data_2865,Black or African American,68.25447739448867
+data_3074,Asian,84.40735706153315
+data_3135,Asian,75.93126731540406
+data_3195,Asian,81.58232458852497
+data_2692,White or Caucasian,71.69236622876302
+data_2674,White or Caucasian,84.9011969937784
+data_2544,White or Caucasian,59.283259796585256
+data_2916,Black or African American,63.43983073453389
+data_3062,Asian,98.55914919489442
+data_2971,Black or African American,79.99148207794858
+data_2991,Black or African American,71.09184478055785
+data_2582,White or Caucasian,65.5785121448645
+data_2732,Black or African American,77.46049971898603
+data_2462,White or Caucasian,50.93222743623738
+data_2419,White or Caucasian,81.83912488108385
+data_3238,Asian,74.05636327471291
+data_2662,White or Caucasian,66.9966423641485
+data_3057,Asian,90.31798193884659
+data_2921,Black or African American,124.48023489907486
+data_3047,Asian,50.58258737627885
+data_2451,White or Caucasian,57.076668794133674
+data_2626,White or Caucasian,80.31020493183459
+data_2930,Black or African American,60.02368560610155
+data_2823,Black or African American,66.92848772423521
+data_2975,Black or African American,66.22653083076843
+data_2609,White or Caucasian,72.56374634503834
+data_2470,White or Caucasian,76.9242968181056
+data_2526,White or Caucasian,45.04053944138181
+data_2723,Black or African American,68.7154948486036
+data_3228,Asian,79.15082212021774
+data_2905,Black or African American,62.025225110857484
+data_2635,White or Caucasian,58.59172461703933
+data_2561,White or Caucasian,82.03779300283928
+data_3237,Asian,63.16584948767833
+data_3003,Asian,72.96607627400361
+data_3038,Asian,74.71825510561497
+data_3184,Asian,58.43557564802782
+data_2959,Black or African American,52.66932099788003
+data_2969,Black or African American,62.48979120054394
+data_2719,Black or African American,53.873431463551874
+data_3231,Asian,55.74158813724925
+data_2997,Black or African American,74.81975325655809
+data_2989,Black or African American,79.24293654868227
+data_2783,Black or African American,50.10531396393769
+data_2808,Black or African American,56.329459370808465
+data_3225,Asian,79.95465381068969
+data_3172,Asian,82.1501140653718
+data_2942,Black or African American,102.26949700699188
+data_2840,Black or African American,63.95182696058194
+data_2669,White or Caucasian,85.24692137773646
+data_2967,Black or African American,80.58328757199467
+data_3169,Asian,61.540433690231474
+data_2554,White or Caucasian,74.69290648956253
+data_2945,Black or African American,77.29898802513112
+data_2448,White or Caucasian,76.11896032550445
+data_2535,White or Caucasian,110.36621226240277
+data_3287,Asian,73.32185860940348
+data_2883,Black or African American,82.07979624701954
+data_2516,White or Caucasian,74.23849659081826
+data_3217,Asian,75.78654810777687
+data_2858,Black or African American,95.5618009399226
+data_2821,Black or African American,83.97971286256339
+data_2990,Black or African American,72.74495993537863
+data_2766,Black or African American,86.19899838419644
+data_3059,Asian,75.93913747659553
+data_2501,White or Caucasian,74.85947042381531
+data_2726,Black or African American,65.35784073453294
+data_2749,Black or African American,74.22854371398947
+data_2547,White or Caucasian,72.96449210380342
+data_2873,Black or African American,73.50860761580334
+data_3257,Asian,59.96210034662377
+data_3037,Asian,64.59296047927961
+data_2720,Black or African American,72.85938322256001
+data_3104,Asian,69.34749701052264
+data_2818,Black or African American,64.50593845398191
+data_2886,Black or African American,64.86074422609498
+data_2913,Black or African American,47.30806702916991
+data_2917,Black or African American,51.67783366337343
+data_3117,Asian,76.97768699463926
+data_2939,Black or African American,78.75247668373515
+data_2572,White or Caucasian,75.71448473490106
+data_2694,White or Caucasian,52.38213414725529
+data_3021,Asian,57.46950711970426
+data_2672,White or Caucasian,120.77561836014004
+data_3199,Asian,85.885687374208
+data_2935,Black or African American,83.4716299772555
+data_2531,White or Caucasian,66.61576935089097
+data_3000,Black or African American,66.66729347179167
+data_3049,Asian,63.09135109442198
+data_2879,Black or African American,48.99017492133107
+data_3235,Asian,66.47717500908485
+data_3086,Asian,73.22562979320449
+data_2668,White or Caucasian,74.6319594731812
+data_2757,Black or African American,65.78627301611533
+data_3159,Asian,75.0545892724226
+data_2539,White or Caucasian,70.6952352955262
+data_3262,Asian,72.98407746242005
+data_3286,Asian,75.87699167661249
+data_3187,Asian,71.2768243357535
+data_3300,Asian,82.77353814131077
+data_3133,Asian,80.37678252173933
+data_2763,Black or African American,77.81979071642293
+data_3275,Asian,82.16727053027088
+data_2503,White or Caucasian,73.04528458173507
+data_2931,Black or African American,78.96828839446721
+data_3066,Asian,58.51073275815423
+data_3029,Asian,79.7918381906518
+data_2734,Black or African American,55.07581314282924
+data_3270,Asian,77.46508827352567
+data_2571,White or Caucasian,74.47988267510682
+data_3247,Asian,64.10313519072335
+data_3185,Asian,72.43650787151606
+data_2693,White or Caucasian,77.20253437825636
+data_2801,Black or African American,68.53491335745174
+data_2750,Black or African American,76.21712219470457
+data_2523,White or Caucasian,94.21855473687395
+data_2584,White or Caucasian,79.03295695237057
+data_3157,Asian,78.99749181359202
+data_2709,Black or African American,64.09966117187855
+data_2529,White or Caucasian,50.69046977985902
+data_2478,White or Caucasian,57.516274334162524
+data_2410,White or Caucasian,73.43216250924087
+data_2637,White or Caucasian,75.26431109622922
+data_2706,Black or African American,91.60497825353805
+data_2772,Black or African American,66.06446122138908
+data_3236,Asian,69.50979824197006
+data_2466,White or Caucasian,73.19332493880489
+data_2860,Black or African American,56.90831202510739
+data_3272,Asian,78.31158980260379
+data_2421,White or Caucasian,89.25832132455119
+data_2652,White or Caucasian,51.46211545648642
+data_2576,White or Caucasian,82.28387904040551
+data_2793,Black or African American,71.5042320906008
+data_2431,White or Caucasian,61.98900108147719
+data_2842,Black or African American,82.12015503561175
+data_3196,Asian,67.55722159791677
+data_2624,White or Caucasian,61.5977491656705
+data_3053,Asian,75.93379318316454
+data_2946,Black or African American,66.44459263573698
+data_2929,Black or African American,76.29796684174217
+data_3158,Asian,80.28554572471417
+data_3039,Asian,76.0677481253109
+data_2494,White or Caucasian,77.81654857913934
+data_3079,Asian,48.854263950055035
+data_2800,Black or African American,53.87267551938171
+data_3154,Asian,78.88767672267134
+data_2449,White or Caucasian,72.47639283228739
+data_2698,White or Caucasian,59.27229561807491
+data_2623,White or Caucasian,85.84339401713504
+data_2440,White or Caucasian,61.530530361441485
+data_2791,Black or African American,75.11280728214655
+data_3123,Asian,67.29727680192238
+data_3083,Asian,87.71398598033791
+data_3200,Asian,87.47927845350064
+data_2940,Black or African American,59.59939926126182
+data_2444,White or Caucasian,71.12571558999083
+data_2424,White or Caucasian,77.92743622970143
+data_2986,Black or African American,83.80948524634968
+data_2944,Black or African American,72.56350996597602
+data_3297,Asian,71.96381495862316
+data_2952,Black or African American,64.18716681290658
+data_2484,White or Caucasian,63.4033886594839
+data_2937,Black or African American,80.79285279371899
+data_2856,Black or African American,75.15082984863818
+data_2861,Black or African American,73.21692603267995
+data_3052,Asian,88.13396107458739
+data_2839,Black or African American,113.31186758284166
+data_3115,Asian,53.53483751082408
+data_2463,White or Caucasian,72.17280296128618
+data_2555,White or Caucasian,49.66653234929689
+data_2928,Black or African American,54.56832823617628
+data_3141,Asian,66.55062908996145
+data_2814,Black or African American,81.03599247212041
+data_2606,White or Caucasian,78.24671637264551
+data_2792,Black or African American,74.178195178741
+data_3176,Asian,80.3562748136823
+data_3054,Asian,70.68780504519508
+data_2434,White or Caucasian,62.50662008877492
+data_3068,Asian,69.18442123240038
+data_2992,Black or African American,85.5280961545129
+data_2577,White or Caucasian,65.72921080909848
+data_2697,White or Caucasian,80.14173138832173
+data_3121,Asian,81.86430834634714
+data_2884,Black or African American,74.21814960727363
+data_3263,Asian,69.03490493707646
+data_3283,Asian,63.10224405711139
+data_2437,White or Caucasian,78.17671380281364
+data_2775,Black or African American,83.18616980661902
+data_3168,Asian,86.72342322759563
+data_2979,Black or African American,81.36139995240211
+data_2532,White or Caucasian,69.30583820250169
+data_3106,Asian,72.880867898591
+data_2934,Black or African American,56.39850602271991
+data_3212,Asian,60.69995029499745
+data_2473,White or Caucasian,75.834324458786
+data_2475,White or Caucasian,75.08891943014284
+data_2479,White or Caucasian,54.40587991389783
+data_2417,White or Caucasian,78.25673574537055
+data_3207,Asian,74.10951917453579
+data_2673,White or Caucasian,68.83837107225692
+data_3024,Asian,48.597783626854074
+data_3143,Asian,76.9354614564005
+data_2570,White or Caucasian,76.64438085131023
+data_3127,Asian,55.081965401147464
+data_3214,Asian,88.55322128934755
+data_2605,White or Caucasian,54.88431146664613
+data_3040,Asian,96.04509652243709
+data_2429,White or Caucasian,74.36203181498564
+data_2751,Black or African American,63.473018987725325
+data_2530,White or Caucasian,76.76678807171646
+data_2707,Black or African American,61.66823827546682
+data_2954,Black or African American,71.73543750233368
+data_2685,White or Caucasian,60.25820445142649
+data_2546,White or Caucasian,67.06351908774904
+data_3002,Asian,83.5244964510174
+data_2996,Black or African American,54.35867089545534
+data_2608,White or Caucasian,69.9603458377057
+data_2871,Black or African American,74.16499880656075
+data_2403,White or Caucasian,85.04019686531514
+data_2736,Black or African American,65.9196713556383
+data_3022,Asian,84.91684386712782
+data_3035,Asian,74.83105088388572
+data_2441,White or Caucasian,69.6670134567034
+data_2416,White or Caucasian,69.84586361048585
+data_3276,Asian,81.4999116328723
+data_2762,Black or African American,77.50578996713968
+data_2806,Black or African American,72.55516101184469
+data_3098,Asian,71.63954470840837
+data_2551,White or Caucasian,77.6777821479446
+data_2450,White or Caucasian,68.8261516316449
+data_2589,White or Caucasian,79.170748036522
+data_2585,White or Caucasian,67.7374988318266
+data_3166,Asian,65.81397000096304
+data_3001,Asian,72.87496651027159
+data_3136,Asian,85.17558617554965
+data_3031,Asian,81.78320191642382
+data_2558,White or Caucasian,67.30624578298999
+data_3071,Asian,69.90188270387236
+data_3063,Asian,84.110824578049
+data_3291,Asian,66.8263577361563
+data_2819,Black or African American,73.49231062468242
+data_2457,White or Caucasian,64.67256273778037
+data_2564,White or Caucasian,97.35723924921174
+data_3210,Asian,71.43579895322104
+data_3242,Asian,61.569766954056426
+data_2477,White or Caucasian,86.64062752254281
+data_2773,Black or African American,60.44150306391903
+data_2906,Black or African American,79.79810037035787
+data_3028,Asian,68.48705590318978
+data_2520,White or Caucasian,77.4731103103977
+data_3124,Asian,78.45309989640707
+data_2910,Black or African American,89.21879234676331
+data_2490,White or Caucasian,78.34809926052142
+data_3290,Asian,92.92328906505799
+data_2645,White or Caucasian,59.7347771718982
+data_2524,White or Caucasian,67.69544579014475
+data_2402,White or Caucasian,87.73171842098128
+data_3146,Asian,78.31431933227465
+data_2813,Black or African American,69.65103665212641
+data_2411,White or Caucasian,70.22859899382678
+data_2511,White or Caucasian,219.37167364458512
+data_2472,White or Caucasian,68.64045302346744
+data_2894,Black or African American,78.38359574698862
+data_2488,White or Caucasian,75.25631697339907
+data_2630,White or Caucasian,83.01041858416005
+data_3116,Asian,68.26763448760943
+data_2705,Black or African American,68.65171632662032
+data_3248,Asian,79.83461579591673
+data_2574,White or Caucasian,51.37865345966926
+data_3252,Asian,72.95161697463811
+data_2812,Black or African American,59.31979714378992
+data_2559,White or Caucasian,77.1417950276212
+data_2797,Black or African American,68.24061381515043
+data_2724,Black or African American,75.17616864312166
+data_2785,Black or African American,56.76987986571743
+data_3025,Asian,59.48838023789511
+data_3223,Asian,74.08508402977044
+data_3012,Asian,69.23400028797016
+data_2499,White or Caucasian,84.44322506227844
+data_2509,White or Caucasian,74.705440101297
+data_2455,White or Caucasian,76.5224996089874
+data_2888,Black or African American,56.9114962546832
+data_2595,White or Caucasian,72.33936261726657
+data_2647,White or Caucasian,61.55396969439831
+data_2895,Black or African American,75.4864636020911
+data_2993,Black or African American,56.734044668056754
+data_3153,Asian,87.18599954416021
+data_2409,White or Caucasian,61.69760311706826
+data_2493,White or Caucasian,70.90086454441663
+data_3173,Asian,62.798780517256795
+data_2903,Black or African American,76.57169766874335
+data_2644,White or Caucasian,71.98057371234617
+data_2826,Black or African American,67.35317832837382
+data_3011,Asian,67.60182568353528
+data_2461,White or Caucasian,60.70942159413172
+data_3020,Asian,56.74590877715435
+data_3026,Asian,49.41352937843664
+data_2679,White or Caucasian,73.60417302714464
+data_3271,Asian,81.30827046723897
+data_2680,White or Caucasian,62.180277861313535
+data_3006,Asian,95.57853814433273
+data_2537,White or Caucasian,72.85295758050404
+data_2968,Black or African American,71.06711382143378
+data_2924,Black or African American,54.851497091834666
+data_2436,White or Caucasian,86.55626619423377
+data_2951,Black or African American,46.111572113887824
+data_3134,Asian,86.31211169127366
+data_3152,Asian,100.82466427070003
+data_3255,Asian,66.11501801398141
+data_2817,Black or African American,81.98974736130724
+data_2789,Black or African American,54.922485975673766
+data_3203,Asian,78.90949974232943
+data_2721,Black or African American,76.21799984236993
+data_2702,Black or African American,62.67572448872244
+data_2594,White or Caucasian,75.66458356563498
+data_2452,White or Caucasian,124.28114259571886
+data_3110,Asian,47.60972988182055
+data_3100,Asian,60.01105689316372
+data_2634,White or Caucasian,64.14695530415479
+data_2943,Black or African American,71.92136056909625
+data_3197,Asian,71.61066750666535
+data_2607,White or Caucasian,82.72506099631752
+data_2620,White or Caucasian,74.8466567695433
+data_3076,Asian,79.50370106927079
+data_3282,Asian,87.5962569135037
+data_2548,White or Caucasian,55.04107379943625
+data_2892,Black or African American,72.835509740001
+data_3155,Asian,65.9186598321046
+data_2613,White or Caucasian,83.48924491586592
+data_2628,White or Caucasian,86.07758635924306
+data_2471,White or Caucasian,55.231500502319726
+data_3147,Asian,79.7346759707772
+data_2573,White or Caucasian,64.32340248306345
+data_2543,White or Caucasian,49.67139909908542
+data_2796,Black or African American,52.394468331789675
+data_3163,Asian,48.967925468889575
+data_2433,White or Caucasian,50.43066505234874
+data_3064,Asian,79.96454825446492
+data_2972,Black or African American,50.278036352754896
+data_3119,Asian,53.391271047039375
+data_3253,Asian,73.05209467664206
+data_2666,White or Caucasian,84.44809860598052
+data_3027,Asian,72.41610068916417
+data_2604,White or Caucasian,73.4121484644907
+data_2982,Black or African American,53.62921724719425
+data_3220,Asian,67.07126122458227
+data_3113,Asian,77.15667440236817
+data_2782,Black or African American,88.85382152133249
+data_2507,White or Caucasian,61.16125126312026
+data_2922,Black or African American,63.79350168700243
+data_2955,Black or African American,64.77308997569911
+data_2643,White or Caucasian,75.65339902378402
+data_3202,Asian,71.56195314861928
+data_2474,White or Caucasian,71.84418624597916
+data_2831,Black or African American,80.7047540546463
+data_3093,Asian,77.16785916487096
+data_3256,Asian,78.11350613557521
+data_2713,Black or African American,68.89272405034733
+data_2733,Black or African American,59.9222899816691
+data_2859,Black or African American,66.4870098926696
+data_3081,Asian,75.21478738790907
+data_2599,White or Caucasian,73.78792127114909
+data_2745,Black or African American,72.91700186871248
+data_3215,Asian,79.45231623971208
+data_2912,Black or African American,52.944979783525014
+data_3279,Asian,58.32288505650499
+data_2522,White or Caucasian,57.781616517332566
+data_3261,Asian,78.23278961093241
+data_2807,Black or African American,57.050733496046995
+data_2890,Black or African American,76.86466604315207
+data_3246,Asian,70.7100017886487
+data_3156,Asian,93.80537570162586
+data_3259,Asian,56.52617407113857
+data_2728,Black or African American,63.47122984215519
+data_3170,Asian,66.21407150122843
+data_2776,Black or African American,45.74931360248167
+data_2932,Black or African American,67.41961608227014
+data_3060,Asian,68.75832517298683
+data_3046,Asian,63.62652983327232
+data_2579,White or Caucasian,61.416689282803894
+data_2788,Black or African American,62.2122994739384
+data_3216,Asian,84.92260529350119
+data_3132,Asian,71.21731232211914
+data_3111,Asian,53.86080059182523
+data_3056,Asian,67.66157488266404
+data_2435,White or Caucasian,69.40194549644715
+data_3073,Asian,88.11111920066566
+data_2633,White or Caucasian,82.90749047415378
+data_2830,Black or African American,54.76059410278977
+data_2704,Black or African American,58.29219942424457
+data_2495,White or Caucasian,58.636507870333276
+data_2661,White or Caucasian,61.85069867618508
+data_2497,White or Caucasian,75.90286621248205
+data_2880,Black or African American,50.920345459665135
+data_2784,Black or African American,83.94911129442337
+data_2746,Black or African American,85.30803715933718
+data_2872,Black or African American,95.61151346935948
+data_2765,Black or African American,77.8768549547122
+data_2404,White or Caucasian,60.40493927736874
+data_3250,Asian,82.77643766258251
+data_2744,Black or African American,64.95358424478977
+data_2418,White or Caucasian,86.59489176670522
+data_2469,White or Caucasian,84.27280044056818
+data_2715,Black or African American,79.38258214611406
+data_2447,White or Caucasian,70.82280692330181
+data_3112,Asian,83.16406955727591
+data_2659,White or Caucasian,78.04448754745576
+data_2885,Black or African American,62.11410613056253
+data_2846,Black or African American,79.97366814763768
+data_2660,White or Caucasian,87.8261983396405
+data_3230,Asian,70.38433956636425
+data_2735,Black or African American,77.38218448488603
+data_3005,Asian,76.21502142039768
+data_2857,Black or African American,58.36518353462993
+data_3183,Asian,53.15945670953895
+data_2777,Black or African American,61.87544344811037
+data_2933,Black or African American,65.98046620718758
+data_2999,Black or African American,80.51632930446503
+data_3208,Asian,58.97010486120973
+data_2533,White or Caucasian,52.46077947374952
+data_2802,Black or African American,66.3082397857012
+data_2646,White or Caucasian,60.91330627214734
+data_2408,White or Caucasian,67.37849244084057
+data_2983,Black or African American,71.6693179146046
+data_3023,Asian,80.2784441903582
+data_2664,White or Caucasian,79.14751079345854
+data_3182,Asian,91.37189101222002
+data_2498,White or Caucasian,54.38073933398444
+data_2898,Black or African American,70.1423883486513
+data_2949,Black or African American,47.957818983938736
+data_3103,Asian,57.563765525553606
+data_3055,Asian,68.92068268753495
+data_3198,Asian,80.93022727284395
+data_2820,Black or African American,82.89904970773483
+data_3243,Asian,68.99892091982869
+data_3251,Asian,68.11981330759416
+data_3186,Asian,80.43419174187083
+data_2827,Black or African American,70.55567453892112
+data_2553,White or Caucasian,77.30999886917726
+data_2598,White or Caucasian,58.4617098198675
+data_2919,Black or African American,61.22835136250452
+data_3004,Asian,80.59903558939455
+data_2795,Black or African American,82.8142335036647
+data_2742,Black or African American,52.56439377723138
+data_2667,White or Caucasian,71.0069166882444
+data_2601,White or Caucasian,72.5491955863551
+data_3140,Asian,78.7108052359159
+data_2603,White or Caucasian,115.49326750713475
+data_2864,Black or African American,69.14097820732863
+data_2853,Black or African American,83.70528755854257
+data_2743,Black or African American,69.99541119479474
+data_3131,Asian,81.44769506910681
+data_2950,Black or African American,59.80456408524437
+data_2729,Black or African American,74.1352126984255
+data_2592,White or Caucasian,65.93361602562021
+data_2769,Black or African American,68.344700797791
+data_3149,Asian,81.38039693764392
+data_2593,White or Caucasian,72.65402502028195
+data_2760,Black or African American,89.32717716806522
+data_2629,White or Caucasian,62.28186541843232
+data_3277,Asian,75.18996468357844
+data_2710,Black or African American,70.48729994082285
+data_3094,Asian,87.81842568077087
+data_2650,White or Caucasian,69.13404437429179
+data_2816,Black or African American,69.11089085735667
+data_2549,White or Caucasian,71.6347234163098
+data_2622,White or Caucasian,52.08163477732356
+data_3181,Asian,78.01805510397412
+data_3278,Asian,69.41539926138674
+data_2958,Black or African American,49.9941980009075
+data_2508,White or Caucasian,72.24254140563943
+data_2625,White or Caucasian,80.40803215962141
+data_2882,Black or African American,90.26211454249851
+data_2552,White or Caucasian,76.43608641947618
+data_2741,Black or African American,57.25409759891555
+data_2406,White or Caucasian,62.74537891569251
+data_2849,Black or African American,71.06756995601529
+data_3007,Asian,78.31279928420491
+data_2722,Black or African American,55.3201185259725
+data_3162,Asian,80.1010897838404
+data_3126,Asian,70.3156033565749
+data_3165,Asian,76.45025573446465
+data_2863,Black or African American,73.35628657793366
+data_2682,White or Caucasian,76.84532611591955
+data_2445,White or Caucasian,79.58082005088251
+data_2915,Black or African American,75.20123848683225
+data_3034,Asian,81.39052361250205
+data_3091,Asian,79.28570694604991
+data_2515,White or Caucasian,57.16154628357474
+data_2527,White or Caucasian,77.37963582342847
+data_2847,Black or African American,60.47534274241998
+data_2513,White or Caucasian,70.98636468842345
+data_2848,Black or African American,46.8408174030357
+data_3036,Asian,76.41947637381425
+data_2439,White or Caucasian,68.74816691055476
+data_3222,Asian,69.90906521546651
+data_2877,Black or African American,74.64299400270194
+data_3188,Asian,87.73803773083614
+data_3267,Asian,86.6323558380986
+data_2486,White or Caucasian,73.2076824318605
+data_2426,White or Caucasian,74.9061931311092
+data_2803,Black or African American,48.6956744395146
+data_2468,White or Caucasian,64.95627147853192
+data_2566,White or Caucasian,82.04406160667615
+data_2755,Black or African American,65.72982402743797
+data_2562,White or Caucasian,83.63581327852101
+data_2492,White or Caucasian,67.21687197709021
+data_2610,White or Caucasian,62.99620922007901
+data_2908,Black or African American,81.47549060836768
+data_2405,White or Caucasian,67.98376874972689
+data_2438,White or Caucasian,58.92819646202608
+data_3161,Asian,60.98095293709441
+data_3069,Asian,72.37639604884312
+data_3204,Asian,58.226539355586084
+data_2974,Black or African American,70.26522780667281
+data_2413,White or Caucasian,64.22606778186318
+data_3150,Asian,85.39337555037484
+data_3080,Asian,66.01346316058324
+data_2453,White or Caucasian,82.21179056383197
+data_2654,White or Caucasian,83.85973912645382
+data_2977,Black or African American,53.392004631313746
+data_2458,White or Caucasian,73.644537203907
+data_3206,Asian,77.09204246987741
+data_2914,Black or African American,74.60032438111217
+data_2824,Black or African American,72.91337785958876
+data_2476,White or Caucasian,62.737670348882574
+data_2578,White or Caucasian,77.62637589487984
+data_2487,White or Caucasian,89.07698095829146
+data_3129,Asian,77.51216933190707
+data_3175,Asian,72.3682994611254
+data_2787,Black or African American,72.08386000882204
+data_3142,Asian,61.86991400843595
+data_3234,Asian,84.00193069152681
+data_3097,Asian,76.71222635597356
+data_2681,White or Caucasian,75.37771583743103
+data_2407,White or Caucasian,76.45716240191561
+data_2701,Black or African American,65.65408996206303
+data_2941,Black or African American,56.06557879006644
+data_3010,Asian,76.31078476168929
+data_2902,Black or African American,74.6672757158542
+data_3072,Asian,54.27219698013644
+data_3092,Asian,74.13162572625544
+data_2639,White or Caucasian,72.68690216350174
+data_2822,Black or African American,70.51504541346984
+data_3293,Asian,70.13578449691492
+data_2896,Black or African American,54.8833348125186
+data_3009,Asian,76.41599866487708
+data_2714,Black or African American,81.35579064830503
+data_2740,Black or African American,93.86336046618091
+data_2833,Black or African American,89.65890255940067
+data_3151,Asian,79.62061252446674
+data_3075,Asian,68.25841712282192
+data_2596,White or Caucasian,73.96015767066719
+data_2964,Black or African American,74.0405295117101
+data_2780,Black or African American,77.54060276663746
+data_2506,White or Caucasian,54.18626657638644
+data_2799,Black or African American,66.09398570255263
+data_3102,Asian,71.10798693573254
+data_2412,White or Caucasian,113.8983544710761
+data_2891,Black or African American,80.8057958228714
+data_2675,White or Caucasian,59.00287215467382
+data_2994,Black or African American,73.13053503908822
+data_3296,Asian,70.92684959213031
+data_2538,White or Caucasian,77.97896164915001
+data_3269,Asian,64.43376243702434
+data_2911,Black or African American,64.6650910011191
+data_3260,Asian,63.64674331014909
+data_3240,Asian,71.73135056499672
+data_2422,White or Caucasian,76.92000330525609
+data_3167,Asian,65.96057696628492
+data_2684,White or Caucasian,71.34098681809274
+data_2810,Black or African American,76.80803537446802
+data_2686,White or Caucasian,66.8122621639622
+data_2619,White or Caucasian,62.10335074459785
+data_2953,Black or African American,55.75249755859211
+data_2978,Black or African American,75.32140340457333
+data_3209,Asian,56.423013425096464
+data_2631,White or Caucasian,50.06105440447535
+data_2480,White or Caucasian,77.85381817518723
+data_2738,Black or African American,108.71170784313009
+data_3191,Asian,71.98537571875092
+data_2786,Black or African American,64.90161405021951
+data_2430,White or Caucasian,77.38469694946987
+data_3258,Asian,68.56099213153965
+data_3232,Asian,59.08489235841695
+data_3118,Asian,84.25781318330353
+data_2747,Black or African American,58.70288637496803
+data_2963,Black or African American,76.7034876912735
+data_2657,White or Caucasian,57.416249860808605
+data_2790,Black or African American,66.64642337043817
+data_2927,Black or African American,71.19639142900932
+data_2512,White or Caucasian,46.13289914909009
+data_3189,Asian,77.77033528038999
+data_2825,Black or African American,66.1893811724934
+data_3077,Asian,68.84675171348394
+data_2691,White or Caucasian,51.27912943878844
+data_2752,Black or African American,62.94123764437843
+data_2615,White or Caucasian,92.09759374477157
+data_2504,White or Caucasian,60.07802706106248
+data_3239,Asian,108.63622942894526
+data_2947,Black or African American,57.07856218460997
+data_3032,Asian,49.51087746462629
+data_2995,Black or African American,69.36656541408414
+data_2586,White or Caucasian,63.97938265510727
+data_3211,Asian,69.59202408746529
+data_2836,Black or African American,77.07185397421499
+data_3096,Asian,85.09260873124958
+data_2597,White or Caucasian,82.45109145673626
+data_2852,Black or African American,85.80210585701872
+data_2899,Black or African American,71.8397738483955
+data_2528,White or Caucasian,67.64383478476638
+data_2617,White or Caucasian,71.82728614162264
+data_3085,Asian,82.02533568130707
+data_3018,Asian,52.46458374712058
+data_2794,Black or African American,57.35646337780657
+data_3174,Asian,63.028383350403416
+data_2754,Black or African American,89.7427366623419
+data_2730,Black or African American,80.86720839897401
+data_2805,Black or African American,77.25393505496176
+data_3128,Asian,100.13018575118915
+data_2731,Black or African American,46.992193787457126
+data_2960,Black or African American,62.96983192336089
+data_2828,Black or African American,89.92374536168064
+data_3015,Asian,73.45963288796845
+data_2641,White or Caucasian,57.40107109309785
+data_2696,White or Caucasian,77.24715271738754
+data_2957,Black or African American,98.7533394498715
+data_2920,Black or African American,73.20177958256404
+data_2981,Black or African American,85.19961178065651
+data_3224,Asian,70.74649941643818
+data_3171,Asian,71.52051539725474
+data_3058,Asian,69.38577360217494
+data_3264,Asian,73.55624178088993
+data_2550,White or Caucasian,77.47139968533392
+data_3289,Asian,66.20210862583941
+data_2887,Black or African American,54.056797188486385
+data_3285,Asian,66.57714357519671
+data_2868,Black or African American,63.45640790703316
+data_2621,White or Caucasian,71.56909628123549
+data_2727,Black or African American,50.71709209522137
+data_3045,Asian,75.17661627845449
+data_3105,Asian,83.75268562222942
+data_2907,Black or African American,71.60826038157633
+data_2521,White or Caucasian,76.98513274328008
+data_2867,Black or African American,75.09201397928013
+data_2774,Black or African American,76.31508362735833
+data_2602,White or Caucasian,67.9474734669445
+data_3095,Asian,73.75545095916135
+data_3205,Asian,81.01722704751825
+data_2454,White or Caucasian,76.25976738474968
+data_2845,Black or African American,92.83909834489101
+data_3244,Asian,71.01372520635776
+data_2889,Black or African American,58.77938503161763
+data_2980,Black or African American,67.65466918957078
+data_2781,Black or African American,76.96256482181116
+data_2965,Black or African American,53.69630638093562
+data_2590,White or Caucasian,71.36934085175017
+data_2510,White or Caucasian,82.24640326451147
+data_2962,Black or African American,53.29210701973932
+data_3193,Asian,70.22726883517444
+data_2976,Black or African American,77.85982461767371
+data_3213,Asian,58.01686476434133
+data_2545,White or Caucasian,66.30534751165187
+data_2973,Black or African American,82.2108831297337
+data_2844,Black or African American,66.34128750994203
+data_2815,Black or African American,54.75328077979769
+data_2542,White or Caucasian,82.40219755809836
+data_3114,Asian,64.34744543769357
+data_2778,Black or African American,88.15996783551145
+data_3088,Asian,71.67816117055197
+data_2753,Black or African American,75.21198728042273
+data_2837,Black or African American,63.608656443887895
+data_2505,White or Caucasian,73.00279987047692
+data_2700,White or Caucasian,79.97309256983205
+data_2467,White or Caucasian,60.874663587274725
+data_3241,Asian,65.7541379945434
+data_2834,Black or African American,79.54066148349372
+data_3042,Asian,53.6046466085143
+data_3178,Asian,72.56909851371174
+data_2768,Black or African American,67.38107769032034
+data_3288,Asian,72.21887786187199
+data_2560,White or Caucasian,51.109670232406465
+data_2414,White or Caucasian,65.02924286437043
+data_2614,White or Caucasian,61.989377525148555
+data_2482,White or Caucasian,69.8834144493084
+data_3130,Asian,83.45006086377174
+data_3087,Asian,83.5272677041479
+data_2557,White or Caucasian,192.91590864063593
+data_2683,White or Caucasian,62.008799806177976
+data_2984,Black or African American,68.27940066142507
+data_2663,White or Caucasian,46.91113415102768
+data_3284,Asian,83.31398264212518
+data_2798,Black or African American,67.80141838317404
+data_2565,White or Caucasian,43.35445812109818
+data_2500,White or Caucasian,62.92125347897732
+data_2926,Black or African American,67.40576748050883
+data_3107,Asian,70.8246254816912
+data_2651,White or Caucasian,68.62990318951182
+data_2854,Black or African American,54.32585564785488
+data_3201,Asian,54.83454503342041
+data_2850,Black or African American,76.24054879126234
+data_2759,Black or African American,73.99067308195141
+data_3078,Asian,58.99698814856958
+data_2956,Black or African American,59.53528140253249
+data_2688,White or Caucasian,74.37115844056005
+data_2985,Black or African American,98.52701678014093
+data_3164,Asian,68.87479670909617
+data_2869,Black or African American,66.30743829247136
+data_2725,Black or African American,54.095616619972134
+data_3108,Asian,73.9511702492915
+data_2809,Black or African American,84.46434317911618
+data_2878,Black or African American,62.89095397397282
+data_3044,Asian,83.26037674207892
+data_2569,White or Caucasian,71.60598095129065
+data_3274,Asian,58.61404989026993
+data_3008,Asian,83.74268339678981
+data_3139,Asian,189.9266993314666
+data_3090,Asian,74.10234123818691
+data_2536,White or Caucasian,75.32839312358729
+data_2525,White or Caucasian,64.06133842630504
+data_2432,White or Caucasian,82.12264949459319
+data_2489,White or Caucasian,67.40095156223909
+data_3254,Asian,73.95777797549178
+data_3033,Asian,62.39890987090094
+data_2938,Black or African American,68.00834184900059
+data_2556,White or Caucasian,67.5374442862126
+data_3298,Asian,77.57265381883002
+data_3226,Asian,68.88823719917148
+data_2442,White or Caucasian,55.7605018385524
+data_2829,Black or African American,84.22244202751206
+data_2900,Black or African American,69.26680752697183
+data_2851,Black or African American,69.09722919466087
+data_2502,White or Caucasian,82.89791225503897
+data_2423,White or Caucasian,80.0121587211759
+data_2756,Black or African American,69.43570817990809
+data_3299,Asian,79.53568451026197
+data_3084,Asian,59.97478925176085
+data_2767,Black or African American,60.73073139536557
+data_3177,Asian,64.81027363584397
+data_2689,White or Caucasian,72.91282801014057
+data_2998,Black or African American,73.95703673258528
+data_2838,Black or African American,78.31656642563462
+data_2670,White or Caucasian,97.82694819690971
+data_2966,Black or African American,74.65597261970619
+data_3014,Asian,88.54848227631993
+data_3249,Asian,65.72484424737661
+data_3265,Asian,67.69423571863044
+data_3221,Asian,65.75488350684347
+data_2541,White or Caucasian,80.19215758775866
+data_3179,Asian,58.66959415954544
+data_2988,Black or African American,65.8072787981182
+data_3281,Asian,52.729102743281615
+data_3099,Asian,77.28240122681879
+data_2649,White or Caucasian,63.68491407564331
+data_2758,Black or African American,49.73589791639549
+data_2874,Black or African American,60.34856858121826
+data_2676,White or Caucasian,66.18179266367736
+data_2678,White or Caucasian,72.79376168563759
+data_2483,White or Caucasian,84.9772376094287
+data_3268,Asian,66.6842754177499
+data_3089,Asian,57.22174283137706
+data_3192,Asian,83.7668495664675
+data_2534,White or Caucasian,59.93337630918975
+data_2627,White or Caucasian,81.64024047081779
+data_2401,White or Caucasian,88.18501779124394
+data_3219,Asian,77.72330972391444
+data_2648,White or Caucasian,55.54173406584717
+data_2961,Black or African American,73.22636902017993
+data_2970,Black or African American,67.55297446372971
+data_2843,Black or African American,65.64758934165953
+data_2443,White or Caucasian,66.28666097156632
+data_2901,Black or African American,72.99804999870508
+data_2870,Black or African American,66.18416537108024
+data_2491,White or Caucasian,85.71926136035091
